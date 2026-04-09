@@ -50,6 +50,7 @@
       transition: opacity 0.4s ease;
     }
     #splash.hidden { opacity: 0; pointer-events: none; }
+    /* Transition handled in JS for precise timing */
     #splash img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
     #splash h1 { color: #e8e4da; font-size: 1.4rem; font-weight: 700; font-family: 'Zodiak', Georgia, serif; }
     #splash p  { color: #5a7a3c; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -213,27 +214,54 @@
       });
     }
 
-    // ── Hide splash once React mounts ─────────────────────────────────────────
-    // Observe #root — when it gets children, the app has mounted
-    var splashTimer = setTimeout(function() {
-      var splash = document.getElementById('splash');
-      if (splash) splash.classList.add('hidden');
-    }, 5000); // fallback: hide after 5s regardless
+    // ── Splash timing ────────────────────────────────────────────────────────
+    // Show splash for a minimum of 1.8s so users can read it,
+    // then wait for React to mount, then fade out over 0.5s.
+    var SPLASH_MIN_MS = 1800;   // minimum visible time
+    var splashShownAt = Date.now();
+    var reactMounted  = false;
+    var minTimerDone  = false;
 
-    var observer = new MutationObserver(function(mutations) {
-      for (var i = 0; i < mutations.length; i++) {
-        if (mutations[i].addedNodes.length > 0) {
-          clearTimeout(splashTimer);
-          var splash = document.getElementById('splash');
-          if (splash) {
-            setTimeout(function() { splash.classList.add('hidden'); }, 200);
+    function hideSplash() {
+      var splash = document.getElementById('splash');
+      if (!splash) return;
+      splash.style.transition = 'opacity 0.5s ease';
+      splash.style.opacity = '0';
+      setTimeout(function() {
+        splash.style.display = 'none';
+      }, 500);
+    }
+
+    function tryHideSplash() {
+      if (reactMounted && minTimerDone) hideSplash();
+    }
+
+    // Minimum display timer
+    setTimeout(function() {
+      minTimerDone = true;
+      tryHideSplash();
+    }, SPLASH_MIN_MS);
+
+    // Fallback: hide after 8s no matter what
+    setTimeout(function() {
+      hideSplash();
+    }, 8000);
+
+    // Watch for React mounting into #root
+    var rootEl = document.getElementById('root');
+    if (rootEl) {
+      var observer = new MutationObserver(function(mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+          if (mutations[i].addedNodes.length > 0) {
+            observer.disconnect();
+            reactMounted = true;
+            tryHideSplash();
+            return;
           }
-          observer.disconnect();
-          return;
         }
-      }
-    });
-    observer.observe(document.getElementById('root'), { childList: true });
+      });
+      observer.observe(rootEl, { childList: true });
+    }
   </script>
 
   <!-- App bundle — loaded AFTER the fetch override above -->
