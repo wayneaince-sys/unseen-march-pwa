@@ -2,9 +2,9 @@
   "name": "Unseen March — PTSD Recovery Companion",
   "short_name": "Unseen March",
   "description": "A mental health wellness companion for The Unseen March by Wayne Ince. Grounding tools, mood tracking, crisis resources, and Chapter 5 journaling worksheets for veterans, first responders, and trauma survivors.",
-  "start_url": "https://www.perplexity.ai/computer/a/unseen-march-ptsd-recovery-com-SMkYney4QvqDb7UBtnLmbw",
-  "scope": "/",
-  "id": "unseen-march-companion",
+  "start_url": "/unseen-march-pwa/",
+  "scope": "/unseen-march-pwa/",
+  "id": "/unseen-march-pwa/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait-primary",
@@ -17,55 +17,55 @@
 
   "icons": [
     {
-      "src": "icons/icon-48.png",
+      "src": "/unseen-march-pwa/icons/icon-48.png",
       "sizes": "48x48",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-72.png",
+      "src": "/unseen-march-pwa/icons/icon-72.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-96.png",
+      "src": "/unseen-march-pwa/icons/icon-96.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-128.png",
+      "src": "/unseen-march-pwa/icons/icon-128.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-144.png",
+      "src": "/unseen-march-pwa/icons/icon-144.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-152.png",
+      "src": "/unseen-march-pwa/icons/icon-152.png",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-192.png",
+      "src": "/unseen-march-pwa/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-256.png",
+      "src": "/unseen-march-pwa/icons/icon-256.png",
       "sizes": "256x256",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "/unseen-march-pwa/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -77,31 +77,32 @@
       "name": "Grounding Tools",
       "short_name": "Ground",
       "description": "Open a grounding technique immediately",
-      "url": "https://www.perplexity.ai/computer/a/unseen-march-ptsd-recovery-com-SMkYney4QvqDb7UBtnLmbw#/grounding",
-      "icons": [{ "src": "icons/shortcut-grounding.png", "sizes": "96x96", "type": "image/png" }]
+      "url": "/unseen-march-pwa/?screen=grounding",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-grounding.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Mood Check-In",
       "short_name": "Mood",
       "description": "Log how you are feeling right now",
-      "url": "https://www.perplexity.ai/computer/a/unseen-march-ptsd-recovery-com-SMkYney4QvqDb7UBtnLmbw#/mood",
-      "icons": [{ "src": "icons/shortcut-mood.png", "sizes": "96x96", "type": "image/png" }]
+      "url": "/unseen-march-pwa/?screen=mood",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-mood.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Crisis Resources",
       "short_name": "Crisis",
       "description": "Veterans Crisis Line and emergency contacts",
-      "url": "https://www.perplexity.ai/computer/a/unseen-march-ptsd-recovery-com-SMkYney4QvqDb7UBtnLmbw#/crisis",
-      "icons": [{ "src": "icons/shortcut-crisis.png", "sizes": "96x96", "type": "image/png" }]
+      "url": "/unseen-march-pwa/?screen=crisis",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-crisis.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Journal",
       "short_name": "Journal",
-      "description": "Open Chapter 5 worksheets and free writing",
-      "url": "https://www.perplexity.ai/computer/a/unseen-march-ptsd-recovery-com-SMkYney4QvqDb7UBtnLmbw#/journal",
-      "icons": [{ "src": "icons/shortcut-journal.png", "sizes": "96x96", "type": "image/png" }]
+      "description": "Chapter 5 worksheets and free writing",
+      "url": "/unseen-march-pwa/?screen=journal",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-journal.png", "sizes": "96x96", "type": "image/png" }]
     }
   ],
 
-  "related_applications": []
+  "related_applications": [],
+  "screenshots": []
 }
