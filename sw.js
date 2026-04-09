@@ -108,6 +108,60 @@ self.addEventListener('fetch', event => {
   );
 });
 
+// ── One-shot Background Sync (deferred tasks when offline → online) ────────
+self.addEventListener('sync', event => {
+  console.log('[SW] Background sync fired:', event.tag);
+
+  if (event.tag === 'sync-mood-checkin') {
+    // Retry any mood check-ins that failed while offline
+    event.waitUntil(
+      caches.open(CACHE_VERSION).then(async cache => {
+        const pending = await cache.match('/unseen-march-pwa/pending-checkins');
+        if (!pending) return;
+        const items = await pending.json();
+        for (const item of items) {
+          try {
+            await fetch('/unseen-march-pwa/api/mood', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(item),
+            });
+          } catch (e) {
+            console.warn('[SW] Sync retry failed, will retry:', e);
+            throw e; // causes browser to retry the sync
+          }
+        }
+        // Clear pending queue on success
+        await cache.delete('/unseen-march-pwa/pending-checkins');
+        channel.postMessage({ type: 'SYNC_COMPLETE', tag: event.tag });
+      })
+    );
+  }
+
+  if (event.tag === 'sync-journal-entry') {
+    event.waitUntil(
+      caches.open(CACHE_VERSION).then(async cache => {
+        const pending = await cache.match('/unseen-march-pwa/pending-journal');
+        if (!pending) return;
+        const items = await pending.json();
+        for (const item of items) {
+          try {
+            await fetch('/unseen-march-pwa/api/journal', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(item),
+            });
+          } catch (e) {
+            throw e;
+          }
+        }
+        await cache.delete('/unseen-march-pwa/pending-journal');
+        channel.postMessage({ type: 'SYNC_COMPLETE', tag: event.tag });
+      })
+    );
+  }
+});
+
 // ── Periodic Background Sync ───────────────────────────────────────────────
 self.addEventListener('periodicsync', event => {
   console.log('[SW] Periodic sync fired:', event.tag);

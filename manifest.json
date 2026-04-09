@@ -69,6 +69,7 @@
       "short_name": "Check-In",
       "description": "Quick mood check-in and today's recovery quote from The Unseen March.",
       "tag": "daily-checkin",
+      "url": "/unseen-march-pwa/?screen=mood",
       "template": "unseen-march-checkin",
       "ms_ac_template": "/unseen-march-pwa/widgets/checkin-template.json",
       "data": "/unseen-march-pwa/widgets/checkin-data.json",
@@ -103,6 +104,7 @@
       "short_name": "Ground",
       "description": "One-tap access to grounding tools — 5-4-3-2-1 and Box Breathing.",
       "tag": "grounding-launch",
+      "url": "/unseen-march-pwa/?screen=grounding",
       "template": "unseen-march-grounding",
       "ms_ac_template": "/unseen-march-pwa/widgets/grounding-template.json",
       "data": "/unseen-march-pwa/widgets/grounding-data.json",
@@ -130,6 +132,7 @@
       "short_name": "Crisis",
       "description": "One-tap Veterans Crisis Line — call, text, or chat 24/7.",
       "tag": "crisis-line",
+      "url": "/unseen-march-pwa/?screen=crisis",
       "template": "unseen-march-crisis",
       "ms_ac_template": "/unseen-march-pwa/widgets/crisis-template.json",
       "data": "/unseen-march-pwa/widgets/crisis-data.json",
@@ -235,7 +238,24 @@
     }
   ],
 
-  "related_applications": [],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.bigsarge.unseenmarch",
+      "id": "com.bigsarge.unseenmarch"
+    }
+  ],
+
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+
+  "scope_extensions": [
+    {
+      "origin": "https://wayneaince-sys.github.io"
+    },
+    {
+      "origin": "https://big-sarge.blog"
+    }
+  ],
 
   "edge_side_panel": {
     "preferred_width": 430
