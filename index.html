@@ -50,13 +50,17 @@
   <link rel="stylesheet" crossorigin href="/unseen-march-pwa/assets/app.css" />
 
   <style>
-    /* Ensure the app fills the screen on mobile */
+    /* Safari-safe full-height — dvh not supported before Safari 15.4 */
+    html { height: -webkit-fill-available; }
     html, body, #root {
       width: 100%;
-      min-height: 100dvh;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      min-height: 100dvh; /* modern Safari 15.4+ and Chrome */
       margin: 0;
       padding: 0;
       background: hsl(45, 15%, 96%);
+      -webkit-text-size-adjust: 100%;
     }
     @media (prefers-color-scheme: dark) {
       html, body, #root { background: hsl(200, 18%, 8%); }
