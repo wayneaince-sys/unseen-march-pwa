@@ -5,15 +5,94 @@
   "start_url": "/unseen-march-pwa/",
   "scope": "/unseen-march-pwa/",
   "id": "/unseen-march-pwa/",
+
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": ["tabbed", "window-controls-overlay", "standalone", "minimal-ui"],
+
   "orientation": "portrait-primary",
-  "background_color": "#f5f3ee",
+  "background_color": "#1a2430",
   "theme_color": "#3d5c2c",
   "lang": "en-US",
   "dir": "ltr",
   "categories": ["health", "lifestyle", "medical"],
   "prefer_related_applications": false,
+
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+
+  "handle_links": "preferred",
+
+  "note_taking": {
+    "new_note_url": "/unseen-march-pwa/?screen=journal"
+  },
+
+  "file_handlers": [
+    {
+      "action": "/unseen-march-pwa/?screen=journal",
+      "accept": {
+        "text/plain": [".txt"],
+        "text/markdown": [".md", ".markdown"]
+      },
+      "icons": [
+        {
+          "src": "/unseen-march-pwa/icons/shortcut-journal.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ],
+      "launch_type": "single-client"
+    }
+  ],
+
+  "share_target": {
+    "action": "/unseen-march-pwa/?screen=journal",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text":  "text",
+      "url":   "url"
+    }
+  },
+
+  "protocol_handlers": [
+    {
+      "protocol": "web+unseenmarch",
+      "url": "/unseen-march-pwa/?action=%s"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "Grounding Tools",
+      "short_name": "Ground",
+      "description": "Open a grounding technique immediately",
+      "url": "/unseen-march-pwa/?screen=grounding",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-grounding.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Mood Check-In",
+      "short_name": "Mood",
+      "description": "Log how you are feeling right now",
+      "url": "/unseen-march-pwa/?screen=mood",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-mood.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Crisis Resources",
+      "short_name": "Crisis",
+      "description": "Veterans Crisis Line and emergency contacts",
+      "url": "/unseen-march-pwa/?screen=crisis",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-crisis.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Journal",
+      "short_name": "Journal",
+      "description": "Chapter 5 worksheets and free writing",
+      "url": "/unseen-march-pwa/?screen=journal",
+      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-journal.png", "sizes": "96x96", "type": "image/png" }]
+    }
+  ],
 
   "icons": [
     {
@@ -72,37 +151,47 @@
     }
   ],
 
-  "shortcuts": [
+  "screenshots": [
     {
-      "name": "Grounding Tools",
-      "short_name": "Ground",
-      "description": "Open a grounding technique immediately",
-      "url": "/unseen-march-pwa/?screen=grounding",
-      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-grounding.png", "sizes": "96x96", "type": "image/png" }]
+      "src": "/unseen-march-pwa/screenshots/home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Home — Daily quote, streak stats, and quick actions"
     },
     {
-      "name": "Mood Check-In",
-      "short_name": "Mood",
-      "description": "Log how you are feeling right now",
-      "url": "/unseen-march-pwa/?screen=mood",
-      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-mood.png", "sizes": "96x96", "type": "image/png" }]
+      "src": "/unseen-march-pwa/screenshots/grounding.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Grounding Tools — 5-4-3-2-1, Box Breathing, Cold Water, Muscle Relaxation"
     },
     {
-      "name": "Crisis Resources",
-      "short_name": "Crisis",
-      "description": "Veterans Crisis Line and emergency contacts",
-      "url": "/unseen-march-pwa/?screen=crisis",
-      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-crisis.png", "sizes": "96x96", "type": "image/png" }]
+      "src": "/unseen-march-pwa/screenshots/mood.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Mood Check-In — Track feelings and log trigger events"
     },
     {
-      "name": "Journal",
-      "short_name": "Journal",
-      "description": "Chapter 5 worksheets and free writing",
-      "url": "/unseen-march-pwa/?screen=journal",
-      "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-journal.png", "sizes": "96x96", "type": "image/png" }]
+      "src": "/unseen-march-pwa/screenshots/journal.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Journal — Chapter 5 worksheets and free writing"
+    },
+    {
+      "src": "/unseen-march-pwa/screenshots/crisis.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Crisis Resources — Veterans Crisis Line and 6-step Safety Plan"
     }
   ],
 
   "related_applications": [],
-  "screenshots": []
+
+  "edge_side_panel": {
+    "preferred_width": 430
+  }
 }
