@@ -69,6 +69,55 @@
     #app-error p  { font-size: 0.8rem; color: #8a9aaa; max-width: 300px; line-height: 1.6; }
     #app-error code { font-size: 0.7rem; color: #c8922a; background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: 0.5rem; max-width: 320px; word-break: break-all; }
     #app-error button { margin-top: 0.5rem; padding: 0.75rem 2rem; background: #3d5c2c; color: #f5f3ee; border: none; border-radius: 0.75rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+
+    /* Mobile-use banner */
+    #mobile-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(135deg, #1e3a1a, #2d5225);
+      color: #f0ece2;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      z-index: 9998;
+      box-shadow: 0 -2px 20px rgba(0,0,0,0.4);
+      border-top: 1px solid rgba(90,140,60,0.4);
+      font-family: -apple-system, 'General Sans', sans-serif;
+      animation: slideUp 0.4s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    #mobile-banner .banner-text { flex: 1; min-width: 0; }
+    #mobile-banner .banner-title {
+      font-size: 0.8rem; font-weight: 700;
+      color: #f0ece2; line-height: 1.3;
+    }
+    #mobile-banner .banner-sub {
+      font-size: 0.7rem; color: rgba(240,236,226,0.7);
+      margin-top: 0.15rem; line-height: 1.4;
+    }
+    #mobile-banner .banner-icon {
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    #mobile-banner .banner-close {
+      background: none; border: none; color: rgba(240,236,226,0.6);
+      font-size: 1.1rem; cursor: pointer; padding: 0.25rem;
+      flex-shrink: 0; line-height: 1;
+    }
+    #mobile-banner .banner-btn {
+      background: #c8922a; color: #fff;
+      border: none; border-radius: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.75rem; font-weight: 700;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      text-decoration: none; display: inline-block;
+    }
+    /* Only show banner on non-mobile */
+    @media (max-width: 600px) { #mobile-banner { display: none !important; } }
   </style>
 </head>
 <body>
@@ -90,6 +139,21 @@
     <p style="font-size:0.7rem; margin-top:1rem;">
       Veterans Crisis Line: <strong>988 → Press 1</strong>
     </p>
+  </div>
+
+
+  <!-- Desktop: nudge users to open on mobile or GitHub Pages app -->
+  <div id="mobile-banner">
+    <span class="banner-icon">📱</span>
+    <div class="banner-text">
+      <div class="banner-title">Best on mobile</div>
+      <div class="banner-sub">Add to your Home Screen for the full app experience.</div>
+    </div>
+    <a class="banner-btn"
+       href="https://wayneaince-sys.github.io/unseen-march-pwa/"
+       target="_blank" rel="noopener noreferrer"
+       id="banner-open-btn">Open App</a>
+    <button class="banner-close" id="banner-close-btn" aria-label="Dismiss">✕</button>
   </div>
 
   <!-- React root -->
@@ -262,6 +326,29 @@
       });
       observer.observe(rootEl, { childList: true });
     }
+
+    // ── Mobile banner ─────────────────────────────────────────────────────────
+    (function() {
+      var banner = document.getElementById('mobile-banner');
+      if (!banner) return;
+
+      // Only show on non-mobile (CSS hides on <=600px, JS handles above that)
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+                     window.innerWidth <= 768;
+      if (isMobile) { banner.style.display = 'none'; return; }
+
+      // Show banner after splash clears (2.5s delay)
+      setTimeout(function() { banner.style.display = 'flex'; }, 2500);
+
+      // Close button
+      var closeBtn = document.getElementById('banner-close-btn');
+      if (closeBtn) closeBtn.addEventListener('click', function() {
+        banner.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        banner.style.opacity = '0';
+        banner.style.transform = 'translateY(100%)';
+        setTimeout(function() { banner.style.display = 'none'; }, 300);
+      });
+    })();
   </script>
 
   <!-- App bundle — loaded AFTER the fetch override above -->
