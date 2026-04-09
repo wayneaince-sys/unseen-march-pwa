@@ -8,110 +8,236 @@
   -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
-
   <title>Unseen March — PTSD Recovery Companion</title>
-  <meta name="description" content="A mental health wellness companion for The Unseen March by Wayne Ince. Grounding tools, mood tracking, crisis resources, and Chapter 5 journaling worksheets for veterans, first responders, and trauma survivors." />
-  <meta name="author" content="Wayne A. Ince" />
-  <meta name="keywords" content="PTSD, veterans, mental health, grounding, trauma, recovery, military, first responders" />
+  <meta name="description" content="A mental health wellness companion for The Unseen March by Wayne Ince." />
 
-  <!-- Web App Manifest -->
   <link rel="manifest" href="/unseen-march-pwa/manifest.json" />
-
-  <!-- Theme / PWA meta -->
-  <meta name="theme-color" content="#3d5c2c" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#1a2430" media="(prefers-color-scheme: dark)" />
-  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#3d5c2c" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Unseen March" />
-
-  <!-- Icons -->
   <link rel="apple-touch-icon" href="/unseen-march-pwa/icons/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="152x152" href="/unseen-march-pwa/icons/icon-152.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/unseen-march-pwa/icons/icon-192.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/unseen-march-pwa/icons/icon-96.png" />
-  <link rel="shortcut icon" href="/unseen-march-pwa/icons/icon-96.png" />
+  <link rel="icon" type="image/png" href="/unseen-march-pwa/icons/icon-96.png" />
 
-  <!-- MS meta -->
-  <meta name="msapplication-TileImage" content="/unseen-march-pwa/icons/icon-144.png" />
-  <meta name="msapplication-TileColor" content="#3d5c2c" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Unseen March — PTSD Recovery Companion" />
-  <meta property="og:description" content="Your daily wellness companion for PTSD recovery. Grounding tools, mood tracking, crisis resources, and journaling worksheets for veterans and first responders." />
-  <meta property="og:image" content="/unseen-march-pwa/icons/icon-512.png" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com" />
   <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
-
-  <!-- App stylesheet -->
   <link rel="stylesheet" crossorigin href="/unseen-march-pwa/assets/app.css" />
 
   <style>
-    /* Safari-safe full-height — dvh not supported before Safari 15.4 */
     html { height: -webkit-fill-available; }
-    html, body, #root {
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
       width: 100%;
       min-height: 100vh;
       min-height: -webkit-fill-available;
-      min-height: 100dvh; /* modern Safari 15.4+ and Chrome */
-      margin: 0;
-      padding: 0;
-      background: hsl(45, 15%, 96%);
+      min-height: 100dvh;
+      background: #f5f3ee;
       -webkit-text-size-adjust: 100%;
+      font-family: 'General Sans', -apple-system, sans-serif;
     }
     @media (prefers-color-scheme: dark) {
-      html, body, #root { background: hsl(200, 18%, 8%); }
+      body { background: #131c26; }
     }
+    #root { min-height: 100vh; min-height: -webkit-fill-available; }
+
+    /* Splash — visible while JS loads */
+    #splash {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+      background: #131c26;
+      z-index: 9999;
+      transition: opacity 0.4s ease;
+    }
+    #splash.hidden { opacity: 0; pointer-events: none; }
+    #splash img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+    #splash h1 { color: #e8e4da; font-size: 1.4rem; font-weight: 700; font-family: 'Zodiak', Georgia, serif; }
+    #splash p  { color: #5a7a3c; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .spinner { width: 26px; height: 26px; border: 3px solid rgba(255,255,255,0.12); border-top-color: #3d5c2c; border-radius: 50%; animation: spin 0.75s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Error state */
+    #app-error {
+      display: none; position: fixed; inset: 0;
+      background: #131c26; color: #e8e4da;
+      flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem; text-align: center; gap: 1rem; z-index: 99999;
+    }
+    #app-error.visible { display: flex; }
+    #app-error h2 { font-size: 1.1rem; color: #e8e4da; }
+    #app-error p  { font-size: 0.8rem; color: #8a9aaa; max-width: 300px; line-height: 1.6; }
+    #app-error code { font-size: 0.7rem; color: #c8922a; background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: 0.5rem; max-width: 320px; word-break: break-all; }
+    #app-error button { margin-top: 0.5rem; padding: 0.75rem 2rem; background: #3d5c2c; color: #f5f3ee; border: none; border-radius: 0.75rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
   </style>
 </head>
 <body>
+
+  <!-- Splash -->
+  <div id="splash">
+    <img src="/unseen-march-pwa/icons/icon-192.png" alt="Unseen March" />
+    <h1>Unseen March</h1>
+    <p>PTSD Recovery Companion</p>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Error fallback -->
+  <div id="app-error">
+    <h2>Something went wrong</h2>
+    <p>The app couldn't load. Please try refreshing, or open in Chrome or Firefox.</p>
+    <code id="error-detail"></code>
+    <button onclick="location.reload()">Reload</button>
+    <p style="font-size:0.7rem; margin-top:1rem;">
+      Veterans Crisis Line: <strong>988 → Press 1</strong>
+    </p>
+  </div>
+
+  <!-- React root -->
   <div id="root"></div>
 
-  <!-- Full app bundle — runs standalone, no iframe needed -->
-  <!-- crossorigin required for Safari ES module CORS handling -->
-  <script type="module" crossorigin src="/unseen-march-pwa/assets/app.js"></script>
-
+  <!-- Inline static data layer — no import(), no module magic, pure ES5 compatible -->
   <script>
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/unseen-march-pwa/sw.js', {
-          scope: '/unseen-march-pwa/'
-        }).then(reg => {
-          console.log('[SW] Registered:', reg.scope);
-          // Register background sync tags when online
-          if ('SyncManager' in window) {
-            navigator.serviceWorker.ready.then(sw => {
-              // These will fire when connectivity is restored
-              sw.sync.register('sync-mood-checkin').catch(() => {});
-              sw.sync.register('sync-journal-entry').catch(() => {});
-            });
-          }
-        }).catch(err => console.warn('[SW] Registration failed:', err));
-      });
-    }
+    // ── Static in-memory storage ──────────────────────────────────────────────
+    (function() {
+      var store = {
+        moods: [], triggers: [], grounding: [], journal: [],
+        progress: { id:1, currentStreak:0, longestStreak:0, totalCheckIns:0, totalGroundingSessions:0, lastCheckIn:null, safetyPlanActivated:false },
+        nextId: { mood:1, trigger:1, grounding:1, journal:1 }
+      };
 
-    // Handle install prompt — native Android install button
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault();
-      deferredPrompt = e;
+      function jsonResponse(data, status) {
+        return new Response(JSON.stringify(data), {
+          status: status || 200,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+
+      var routes = {
+        '/api/mood': {
+          GET: function() {
+            return jsonResponse(store.moods.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); }));
+          },
+          POST: function(body) {
+            var e = Object.assign({}, body, { id: store.nextId.mood++, timestamp: new Date().toISOString(), note: body.note||null, triggers: body.triggers||null });
+            store.moods.push(e);
+            store.progress.totalCheckIns++;
+            store.progress.lastCheckIn = new Date().toISOString();
+            store.progress.currentStreak++;
+            if (store.progress.currentStreak > store.progress.longestStreak) store.progress.longestStreak = store.progress.currentStreak;
+            return jsonResponse(e, 201);
+          }
+        },
+        '/api/triggers': {
+          GET: function() { return jsonResponse(store.triggers.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); })); },
+          POST: function(body) {
+            var e = Object.assign({}, body, { id: store.nextId.trigger++, timestamp: new Date().toISOString(), whatHelped: body.whatHelped||null });
+            store.triggers.push(e);
+            return jsonResponse(e, 201);
+          }
+        },
+        '/api/grounding': {
+          GET: function() { return jsonResponse(store.grounding.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); })); },
+          POST: function(body) {
+            var e = Object.assign({}, body, { id: store.nextId.grounding++, timestamp: new Date().toISOString(), durationSeconds: body.durationSeconds||null, completedSteps: body.completedSteps||null, totalSteps: body.totalSteps||null });
+            store.grounding.push(e);
+            store.progress.totalGroundingSessions++;
+            return jsonResponse(e, 201);
+          }
+        },
+        '/api/journal': {
+          GET: function() { return jsonResponse(store.journal.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); })); },
+          POST: function(body) {
+            var e = Object.assign({}, body, { id: store.nextId.journal++, timestamp: new Date().toISOString(), prompt: body.prompt||null });
+            store.journal.push(e);
+            return jsonResponse(e, 201);
+          }
+        },
+        '/api/progress': {
+          GET: function() { return jsonResponse(Object.assign({}, store.progress)); },
+          PATCH: function(body) {
+            Object.assign(store.progress, body);
+            return jsonResponse(Object.assign({}, store.progress));
+          }
+        }
+      };
+
+      // Override fetch ONLY for /api/ paths — pass everything else to real fetch
+      var _realFetch = window.fetch.bind(window);
+      window.fetch = function(input, init) {
+        var url = (typeof input === 'string') ? input : (input && input.url ? input.url : String(input));
+        var method = (init && init.method ? init.method : 'GET').toUpperCase();
+        // Strip origin to get path
+        var path = url.replace(/^https?:\/\/[^\/]+/, '').split('?')[0];
+
+        var route = routes[path];
+        if (route) {
+          var handler = route[method];
+          if (handler) {
+            var body = null;
+            if (init && init.body) {
+              try { body = JSON.parse(init.body); } catch(e) { body = {}; }
+            }
+            try {
+              return Promise.resolve(handler(body));
+            } catch(e) {
+              return Promise.resolve(jsonResponse({ error: e.message }, 500));
+            }
+          }
+        }
+        return _realFetch(input, init);
+      };
+    })();
+
+    // ── Error boundary ────────────────────────────────────────────────────────
+    window.addEventListener('error', function(e) {
+      var el = document.getElementById('app-error');
+      var detail = document.getElementById('error-detail');
+      if (el) el.classList.add('visible');
+      if (detail) detail.textContent = (e.message || '') + (e.filename ? ' @ ' + e.filename.split('/').pop() : '');
+      var splash = document.getElementById('splash');
+      if (splash) splash.classList.add('hidden');
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      var el = document.getElementById('app-error');
+      var detail = document.getElementById('error-detail');
+      if (el) el.classList.add('visible');
+      if (detail) detail.textContent = String(e.reason || 'Promise rejected');
+      var splash = document.getElementById('splash');
+      if (splash) splash.classList.add('hidden');
     });
 
-    // Handle shortcut query params — route to correct screen on launch
-    const params = new URLSearchParams(location.search);
-    const screen = params.get('screen');
-    if (screen) {
-      // Wait for React to mount, then navigate via hash
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          window.location.hash = '#/' + screen;
-        }, 100);
+    // ── Service worker ────────────────────────────────────────────────────────
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/unseen-march-pwa/sw.js', { scope: '/unseen-march-pwa/' })
+          .catch(function(e) { console.warn('[SW]', e); });
       });
     }
+
+    // ── Hide splash once React mounts ─────────────────────────────────────────
+    // Observe #root — when it gets children, the app has mounted
+    var splashTimer = setTimeout(function() {
+      var splash = document.getElementById('splash');
+      if (splash) splash.classList.add('hidden');
+    }, 5000); // fallback: hide after 5s regardless
+
+    var observer = new MutationObserver(function(mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        if (mutations[i].addedNodes.length > 0) {
+          clearTimeout(splashTimer);
+          var splash = document.getElementById('splash');
+          if (splash) {
+            setTimeout(function() { splash.classList.add('hidden'); }, 200);
+          }
+          observer.disconnect();
+          return;
+        }
+      }
+    });
+    observer.observe(document.getElementById('root'), { childList: true });
   </script>
+
+  <!-- App bundle — loaded AFTER the fetch override above -->
+  <script type="module" crossorigin src="/unseen-march-pwa/assets/app.js"></script>
+
 </body>
 </html>
