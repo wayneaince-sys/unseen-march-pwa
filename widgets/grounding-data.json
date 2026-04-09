@@ -1,0 +1,9 @@
+{
+  "title": "Grounding Tools",
+  "subtitle": "Re-engage your senses. You are here. You are safe.",
+  "tools": [
+    { "label": "5-4-3-2-1", "desc": "~5 min", "url": "/unseen-march-pwa/?screen=grounding&tool=54321" },
+    { "label": "Box Breathing", "desc": "~4 min", "url": "/unseen-march-pwa/?screen=grounding&tool=box" },
+    { "label": "Cold Water", "desc": "Instant", "url": "/unseen-march-pwa/?screen=grounding&tool=cold" }
+  ]
+}

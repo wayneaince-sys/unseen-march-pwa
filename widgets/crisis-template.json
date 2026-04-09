@@ -1,0 +1,27 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🛡️ ${title}",
+      "weight": "Bolder",
+      "color": "Attention"
+    },
+    {
+      "type": "TextBlock",
+      "text": "${subtitle}",
+      "size": "Small",
+      "isSubtle": true
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        { "type": "Action.OpenUrl", "title": "📞 Call 988 → Press 1", "url": "tel:988",    "style": "destructive" },
+        { "type": "Action.OpenUrl", "title": "💬 Text 838255",         "url": "sms:838255" },
+        { "type": "Action.OpenUrl", "title": "🌐 Chat Online",         "url": "${chatUrl}" }
+      ]
+    }
+  ]
+}

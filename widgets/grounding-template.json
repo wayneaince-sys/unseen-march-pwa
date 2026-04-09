@@ -1,0 +1,28 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "💨 Grounding Tools",
+      "weight": "Bolder",
+      "color": "Accent"
+    },
+    {
+      "type": "TextBlock",
+      "text": "${subtitle}",
+      "size": "Small",
+      "isSubtle": true,
+      "wrap": true
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        { "type": "Action.OpenUrl", "title": "5-4-3-2-1 (~5 min)", "url": "/unseen-march-pwa/?screen=grounding&tool=54321" },
+        { "type": "Action.OpenUrl", "title": "Box Breathing (~4 min)", "url": "/unseen-march-pwa/?screen=grounding&tool=box" },
+        { "type": "Action.OpenUrl", "title": "Cold Water (Instant)", "url": "/unseen-march-pwa/?screen=grounding&tool=cold" }
+      ]
+    }
+  ]
+}

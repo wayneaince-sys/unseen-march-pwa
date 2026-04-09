@@ -6,7 +6,7 @@
   "scope": "/unseen-march-pwa/",
   "id": "/unseen-march-pwa/",
 
-  "display": "standalone",
+  "display": "tabbed",
   "display_override": ["tabbed", "window-controls-overlay", "standalone", "minimal-ui"],
 
   "orientation": "portrait-primary",
@@ -18,7 +18,7 @@
   "prefer_related_applications": false,
 
   "launch_handler": {
-    "client_mode": ["navigate-existing", "auto"]
+    "client_mode": ["navigate-new", "auto"]
   },
 
   "handle_links": "preferred",
@@ -41,7 +41,7 @@
           "type": "image/png"
         }
       ],
-      "launch_type": "single-client"
+      "launch_type": "multiple-clients"
     }
   ],
 
@@ -51,8 +51,8 @@
     "enctype": "application/x-www-form-urlencoded",
     "params": {
       "title": "title",
-      "text":  "text",
-      "url":   "url"
+      "text": "text",
+      "url": "url"
     }
   },
 
@@ -60,6 +60,97 @@
     {
       "protocol": "web+unseenmarch",
       "url": "/unseen-march-pwa/?action=%s"
+    }
+  ],
+
+  "widgets": [
+    {
+      "name": "Daily Check-In",
+      "short_name": "Check-In",
+      "description": "Quick mood check-in and today's recovery quote from The Unseen March.",
+      "tag": "daily-checkin",
+      "template": "unseen-march-checkin",
+      "ms_ac_template": "/unseen-march-pwa/widgets/checkin-template.json",
+      "data": "/unseen-march-pwa/widgets/checkin-data.json",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/unseen-march-pwa/screenshots/home.png",
+          "sizes": "390x844",
+          "label": "Daily check-in widget showing mood scale and recovery quote"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/unseen-march-pwa/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ],
+      "backgrounds": [
+        {
+          "src": "/unseen-march-pwa/icons/icon-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ],
+      "auth": false,
+      "update": 3600
+    },
+    {
+      "name": "Grounding Quick-Launch",
+      "short_name": "Ground",
+      "description": "One-tap access to grounding tools — 5-4-3-2-1 and Box Breathing.",
+      "tag": "grounding-launch",
+      "template": "unseen-march-grounding",
+      "ms_ac_template": "/unseen-march-pwa/widgets/grounding-template.json",
+      "data": "/unseen-march-pwa/widgets/grounding-data.json",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/unseen-march-pwa/screenshots/grounding.png",
+          "sizes": "390x844",
+          "label": "Grounding tools widget with quick-launch buttons"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/unseen-march-pwa/icons/shortcut-grounding.png",
+          "sizes": "96x96",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ],
+      "auth": false,
+      "update": 86400
+    },
+    {
+      "name": "Crisis Line",
+      "short_name": "Crisis",
+      "description": "One-tap Veterans Crisis Line — call, text, or chat 24/7.",
+      "tag": "crisis-line",
+      "template": "unseen-march-crisis",
+      "ms_ac_template": "/unseen-march-pwa/widgets/crisis-template.json",
+      "data": "/unseen-march-pwa/widgets/crisis-data.json",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/unseen-march-pwa/screenshots/crisis.png",
+          "sizes": "390x844",
+          "label": "Crisis widget with Veterans Crisis Line call and text buttons"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/unseen-march-pwa/icons/shortcut-crisis.png",
+          "sizes": "96x96",
+          "type": "image/png",
+          "purpose": "any"
+        }
+      ],
+      "auth": false,
+      "update": 86400
     }
   ],
 
@@ -95,60 +186,15 @@
   ],
 
   "icons": [
-    {
-      "src": "/unseen-march-pwa/icons/icon-48.png",
-      "sizes": "48x48",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-256.png",
-      "sizes": "256x256",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/unseen-march-pwa/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "/unseen-march-pwa/icons/icon-48.png",  "sizes": "48x48",   "type": "image/png", "purpose": "any" },
+    { "src": "/unseen-march-pwa/icons/icon-72.png",  "sizes": "72x72",   "type": "image/png", "purpose": "any" },
+    { "src": "/unseen-march-pwa/icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+    { "src": "/unseen-march-pwa/icons/icon-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any" },
+    { "src": "/unseen-march-pwa/icons/icon-144.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "/unseen-march-pwa/icons/icon-152.png", "sizes": "152x152", "type": "image/png", "purpose": "any" },
+    { "src": "/unseen-march-pwa/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/unseen-march-pwa/icons/icon-256.png", "sizes": "256x256", "type": "image/png", "purpose": "any" },
+    { "src": "/unseen-march-pwa/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
 
   "screenshots": [

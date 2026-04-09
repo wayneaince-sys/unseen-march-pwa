@@ -1,0 +1,14 @@
+{
+  "quote": "Seeking help is not weakness. It is tactical intelligence.",
+  "quoteSource": "The Unseen March, Ch. 3",
+  "streak": 3,
+  "lastCheckin": "Today",
+  "appUrl": "/unseen-march-pwa/?screen=mood",
+  "moods": [
+    { "emoji": "😔", "label": "Struggling", "value": 1 },
+    { "emoji": "😕", "label": "Low",        "value": 2 },
+    { "emoji": "😐", "label": "Steady",     "value": 3 },
+    { "emoji": "🙂", "label": "Good",       "value": 4 },
+    { "emoji": "💪", "label": "Strong",     "value": 5 }
+  ]
+}
