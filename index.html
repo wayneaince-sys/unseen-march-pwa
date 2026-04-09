@@ -1,358 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!--
-    Unseen March — PTSD Recovery Companion
-    by Wayne A. Ince, SMS (Ret.), USAF
-    Created with Perplexity Computer · https://www.perplexity.ai/computer
-  -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
-  <title>Unseen March — PTSD Recovery Companion</title>
-  <meta name="description" content="A mental health wellness companion for The Unseen March by Wayne Ince." />
+/* Splash — visible while JS loads */
+#splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: #131c26;
+  z-index: 9999;
+  opacity: 1;  /* ADDED: explicit initial opacity */
+  transition: opacity 0.4s ease;
+  -webkit-transition: opacity 0.4s ease;  /* ADDED: Safari support */
+  -webkit-transform: translateZ(0);  /* ADDED: hardware acceleration */
+  transform: translateZ(0);
+  will-change: opacity;  /* ADDED: render optimization */
+}
 
-  <link rel="manifest" href="/unseen-march-pwa/manifest.json" />
-  <meta name="theme-color" content="#3d5c2c" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Unseen March" />
-  <link rel="apple-touch-icon" href="/unseen-march-pwa/icons/icon-192.png" />
-  <link rel="icon" type="image/png" href="/unseen-march-pwa/icons/icon-96.png" />
+#splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 0.4s ease;  /* ADDED: Safari support */
+  transition: opacity 0.4s ease;
+}
 
-  <link rel="preconnect" href="https://api.fontshare.com" />
-  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" crossorigin integrity="sha384-AQaw3lCCWVFSRqrCUclel01vK1oYf3jK6zlQzdPrFCKZwhywpZvB2hSa73AHRKKG" href="/unseen-march-pwa/assets/app.css" />
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid rgba(255,255,255,0.12);
+  border-top-color: #3d5c2c;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  -webkit-animation: spin 0.75s linear infinite;  /* ADDED: Safari support */
+  backface-visibility: hidden;  /* ADDED: animation stability */
+  -webkit-backface-visibility: hidden;  /* ADDED: Safari support */
+  -webkit-perspective: 1000;  /* ADDED: Safari support */
+}
 
-  <style>
-    html { height: -webkit-fill-available; }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      width: 100%;
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-      min-height: 100dvh;
-      background: #f5f3ee;
-      -webkit-text-size-adjust: 100%;
-      font-family: 'General Sans', -apple-system, sans-serif;
-    }
-    @media (prefers-color-scheme: dark) {
-      body { background: #131c26; }
-    }
-    #root { min-height: 100vh; min-height: -webkit-fill-available; }
+/* ADDED: Safari keyframes */
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
 
-    /* Splash — visible while JS loads */
-    #splash {
-      position: fixed; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 1rem;
-      background: #131c26;
-      z-index: 9999;
-      transition: opacity 0.4s ease;
-    }
-    #splash.hidden { opacity: 0; pointer-events: none; }
-    /* Transition handled in JS for precise timing */
-    #splash img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
-    #splash h1 { color: #e8e4da; font-size: 1.4rem; font-weight: 700; font-family: 'Zodiak', Georgia, serif; }
-    #splash p  { color: #5a7a3c; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
-    .spinner { width: 26px; height: 26px; border: 3px solid rgba(255,255,255,0.12); border-top-color: #3d5c2c; border-radius: 50%; animation: spin 0.75s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Error state */
-    #app-error {
-      display: none; position: fixed; inset: 0;
-      background: #131c26; color: #e8e4da;
-      flex-direction: column; align-items: center; justify-content: center;
-      padding: 2rem; text-align: center; gap: 1rem; z-index: 99999;
-    }
-    #app-error.visible { display: flex; }
-    #app-error h2 { font-size: 1.1rem; color: #e8e4da; }
-    #app-error p  { font-size: 0.8rem; color: #8a9aaa; max-width: 300px; line-height: 1.6; }
-    #app-error code { font-size: 0.7rem; color: #c8922a; background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: 0.5rem; max-width: 320px; word-break: break-all; }
-    #app-error button { margin-top: 0.5rem; padding: 0.75rem 2rem; background: #3d5c2c; color: #f5f3ee; border: none; border-radius: 0.75rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
-
-    /* Mobile-use banner */
-    #mobile-banner {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(135deg, #1e3a1a, #2d5225);
-      color: #f0ece2;
-      padding: 0.85rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      z-index: 9998;
-      box-shadow: 0 -2px 20px rgba(0,0,0,0.4);
-      border-top: 1px solid rgba(90,140,60,0.4);
-      font-family: -apple-system, 'General Sans', sans-serif;
-      animation: slideUp 0.4s ease;
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
-    #mobile-banner .banner-text { flex: 1; min-width: 0; }
-    #mobile-banner .banner-title {
-      font-size: 0.8rem; font-weight: 700;
-      color: #f0ece2; line-height: 1.3;
-    }
-    #mobile-banner .banner-sub {
-      font-size: 0.7rem; color: rgba(240,236,226,0.7);
-      margin-top: 0.15rem; line-height: 1.4;
-    }
-    #mobile-banner .banner-icon {
-      font-size: 1.5rem; flex-shrink: 0;
-    }
-    #mobile-banner .banner-close {
-      background: none; border: none; color: rgba(240,236,226,0.6);
-      font-size: 1.1rem; cursor: pointer; padding: 0.25rem;
-      flex-shrink: 0; line-height: 1;
-    }
-    #mobile-banner .banner-btn {
-      background: #c8922a; color: #fff;
-      border: none; border-radius: 0.5rem;
-      padding: 0.45rem 0.9rem;
-      font-size: 0.75rem; font-weight: 700;
-      cursor: pointer; white-space: nowrap; flex-shrink: 0;
-      text-decoration: none; display: inline-block;
-    }
-    /* Only show banner on non-mobile */
-    @media (max-width: 600px) { #mobile-banner { display: none !important; } }
-  </style>
-</head>
-<body>
-
-  <!-- Splash -->
-  <div id="splash">
-    <img src="/unseen-march-pwa/icons/icon-192.png" alt="Unseen March" />
-    <h1>Unseen March</h1>
-    <p>PTSD Recovery Companion</p>
-    <div class="spinner"></div>
-  </div>
-
-  <!-- Error fallback -->
-  <div id="app-error">
-    <h2>Something went wrong</h2>
-    <p>The app couldn't load. Please try refreshing, or open in Chrome or Firefox.</p>
-    <code id="error-detail"></code>
-    <button onclick="location.reload()">Reload</button>
-    <p style="font-size:0.7rem; margin-top:1rem;">
-      Veterans Crisis Line: <strong>988 → Press 1</strong>
-    </p>
-  </div>
-
-
-  <!-- Desktop: nudge users to open on mobile or GitHub Pages app -->
-  <div id="mobile-banner">
-    <span class="banner-icon">📱</span>
-    <div class="banner-text">
-      <div class="banner-title">Best on mobile</div>
-      <div class="banner-sub">Add to your Home Screen for the full app experience.</div>
-    </div>
-    <a class="banner-btn"
-       href="https://wayneaince-sys.github.io/unseen-march-pwa/"
-       target="_blank" rel="noopener noreferrer"
-       id="banner-open-btn">Open App</a>
-    <button class="banner-close" id="banner-close-btn" aria-label="Dismiss">✕</button>
-  </div>
-
-  <!-- React root -->
-  <div id="root"></div>
-
-  <!-- Inline static data layer — no import(), no module magic, pure ES5 compatible -->
-  <script>
-    // ── Static in-memory storage ──────────────────────────────────────────────
-    (function() {
-      var store = {
-        moods: [], triggers: [], grounding: [], journal: [],
-        progress: { id:1, currentStreak:0, longestStreak:0, totalCheckIns:0, totalGroundingSessions:0, lastCheckIn:null, safetyPlanActivated:false },
-        nextId: { mood:1, trigger:1, grounding:1, journal:1 }
-      };
-
-      function jsonResponse(data, status) {
-        return new Response(JSON.stringify(data), {
-          status: status || 200,
-          headers: { 'Content-Type': 'application/json' }
-        });
-      }
-
-      var routes = {
-        '/api/mood': {
-          GET: function() {
-            return jsonResponse(store.moods.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); }));
-          },
-          POST: function(body) {
-            var e = Object.assign({}, body, { id: store.nextId.mood++, timestamp: new Date().toISOString(), note: body.note||null, triggers: body.triggers||null });
-            store.moods.push(e);
-            store.progress.totalCheckIns++;
-            store.progress.lastCheckIn = new Date().toISOString();
-            store.progress.currentStreak++;
-            if (store.progress.currentStreak > store.progress.longestStreak) store.progress.longestStreak = store.progress.currentStreak;
-            return jsonResponse(e, 201);
-          }
-        },
-        '/api/triggers': {
-          GET: function() { return jsonResponse(store.triggers.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); })); },
-          POST: function(body) {
-            var e = Object.assign({}, body, { id: store.nextId.trigger++, timestamp: new Date().toISOString(), whatHelped: body.whatHelped||null });
-            store.triggers.push(e);
-            return jsonResponse(e, 201);
-          }
-        },
-        '/api/grounding': {
-          GET: function() { return jsonResponse(store.grounding.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); })); },
-          POST: function(body) {
-            var e = Object.assign({}, body, { id: store.nextId.grounding++, timestamp: new Date().toISOString(), durationSeconds: body.durationSeconds||null, completedSteps: body.completedSteps||null, totalSteps: body.totalSteps||null });
-            store.grounding.push(e);
-            store.progress.totalGroundingSessions++;
-            return jsonResponse(e, 201);
-          }
-        },
-        '/api/journal': {
-          GET: function() { return jsonResponse(store.journal.slice().sort(function(a,b){ return new Date(b.timestamp) - new Date(a.timestamp); })); },
-          POST: function(body) {
-            var e = Object.assign({}, body, { id: store.nextId.journal++, timestamp: new Date().toISOString(), prompt: body.prompt||null });
-            store.journal.push(e);
-            return jsonResponse(e, 201);
-          }
-        },
-        '/api/progress': {
-          GET: function() { return jsonResponse(Object.assign({}, store.progress)); },
-          PATCH: function(body) {
-            Object.assign(store.progress, body);
-            return jsonResponse(Object.assign({}, store.progress));
-          }
-        }
-      };
-
-      // Override fetch ONLY for /api/ paths — pass everything else to real fetch
-      var _realFetch = window.fetch.bind(window);
-      window.fetch = function(input, init) {
-        var url = (typeof input === 'string') ? input : (input && input.url ? input.url : String(input));
-        var method = (init && init.method ? init.method : 'GET').toUpperCase();
-        // Strip origin to get path
-        var path = url.replace(/^https?:\/\/[^\/]+/, '').split('?')[0];
-
-        var route = routes[path];
-        if (route) {
-          var handler = route[method];
-          if (handler) {
-            var body = null;
-            if (init && init.body) {
-              try { body = JSON.parse(init.body); } catch(e) { body = {}; }
-            }
-            try {
-              return Promise.resolve(handler(body));
-            } catch(e) {
-              return Promise.resolve(jsonResponse({ error: e.message }, 500));
-            }
-          }
-        }
-        return _realFetch(input, init);
-      };
-    })();
-
-    // ── Error boundary ────────────────────────────────────────────────────────
-    window.addEventListener('error', function(e) {
-      var el = document.getElementById('app-error');
-      var detail = document.getElementById('error-detail');
-      if (el) el.classList.add('visible');
-      if (detail) detail.textContent = (e.message || '') + (e.filename ? ' @ ' + e.filename.split('/').pop() : '');
-      var splash = document.getElementById('splash');
-      if (splash) splash.classList.add('hidden');
-    });
-    window.addEventListener('unhandledrejection', function(e) {
-      var el = document.getElementById('app-error');
-      var detail = document.getElementById('error-detail');
-      if (el) el.classList.add('visible');
-      if (detail) detail.textContent = String(e.reason || 'Promise rejected');
-      var splash = document.getElementById('splash');
-      if (splash) splash.classList.add('hidden');
-    });
-
-    // ── Service worker ────────────────────────────────────────────────────────
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/unseen-march-pwa/sw.js', { scope: '/unseen-march-pwa/' })
-          .catch(function(e) { console.warn('[SW]', e); });
-      });
-    }
-
-    // ── Splash timing ────────────────────────────────────────────────────────
-    // Show splash for a minimum of 1.8s so users can read it,
-    // then wait for React to mount, then fade out over 0.5s.
-    var SPLASH_MIN_MS = 1800;   // minimum visible time
-    var splashShownAt = Date.now();
-    var reactMounted  = false;
-    var minTimerDone  = false;
-
-    function hideSplash() {
-      var splash = document.getElementById('splash');
-      if (!splash) return;
-      splash.style.transition = 'opacity 0.5s ease';
-      splash.style.opacity = '0';
-      setTimeout(function() {
-        splash.style.display = 'none';
-      }, 500);
-    }
-
-    function tryHideSplash() {
-      if (reactMounted && minTimerDone) hideSplash();
-    }
-
-    // Minimum display timer
-    setTimeout(function() {
-      minTimerDone = true;
-      tryHideSplash();
-    }, SPLASH_MIN_MS);
-
-    // Fallback: hide after 8s no matter what
-    setTimeout(function() {
-      hideSplash();
-    }, 8000);
-
-    // Watch for React mounting into #root
-    var rootEl = document.getElementById('root');
-    if (rootEl) {
-      var observer = new MutationObserver(function(mutations) {
-        for (var i = 0; i < mutations.length; i++) {
-          if (mutations[i].addedNodes.length > 0) {
-            observer.disconnect();
-            reactMounted = true;
-            tryHideSplash();
-            return;
-          }
-        }
-      });
-      observer.observe(rootEl, { childList: true });
-    }
-
-    // ── Mobile banner ─────────────────────────────────────────────────────────
-    (function() {
-      var banner = document.getElementById('mobile-banner');
-      if (!banner) return;
-
-      // Only show on non-mobile (CSS hides on <=600px, JS handles above that)
-      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-                     window.innerWidth <= 768;
-      if (isMobile) { banner.style.display = 'none'; return; }
-
-      // Show banner after splash clears (2.5s delay)
-      setTimeout(function() { banner.style.display = 'flex'; }, 2500);
-
-      // Close button
-      var closeBtn = document.getElementById('banner-close-btn');
-      if (closeBtn) closeBtn.addEventListener('click', function() {
-        banner.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        banner.style.opacity = '0';
-        banner.style.transform = 'translateY(100%)';
-        setTimeout(function() { banner.style.display = 'none'; }, 300);
-      });
-    })();
-  </script>
-
-  <!-- App bundle — loaded AFTER the fetch override above -->
-  <script type="module" crossorigin integrity="sha384-6b4/zzxkds55/nsi+9hgxd6vumq7rTFxBtpIPm/jHIaZ/Nrkl8y5r94iTquavPDx" src="/unseen-march-pwa/assets/app.js"></script>
-
-</body>
-</html>
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
