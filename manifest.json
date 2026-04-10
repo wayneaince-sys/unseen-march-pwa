@@ -55,12 +55,12 @@
     }
   ],
   "screenshots": [
-    {
-      "src": "screenshots/screen1.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "The Unseen March — Home"
-    }
-  ]
+  {
+    "src": "icons/icon-512.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "The Unseen March — Home"
+  }
+]
 }
