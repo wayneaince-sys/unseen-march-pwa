@@ -1,4 +1,118 @@
 {
+    "name": "Unseen March — PTSD Recovery Companion",
+    "short_name": "Unseen March",
+    "description": "A mental health wellness companion for The Unseen March by Wayne Ince. Grounding tools, mood tracking, crisis resources, and journaling worksheets for veterans, first responders, and trauma survivors.",
+    "start_url": "/unseen-march-pwa/",
+    "scope": "/unseen-march-pwa/",
+    "id": "/unseen-march-pwa/",
+    "display": "standalone",
+    "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+    "orientation": "portrait-primary",
+    "background_color": "#1a2430",
+    "theme_color": "#3d5c2c",
+    "lang": "en-US",
+    "dir": "ltr",
+    "categories": ["health", "lifestyle", "medical"],
+    "prefer_related_applications": false,
+    "note_taking": {
+          "new_note_url": "/unseen-march-pwa/?screen=journal"
+    },
+    "file_handlers": [
+          {
+                  "action": "/unseen-march-pwa/?screen=journal",
+                  "accept": {
+                            "text/plain": [".txt"],
+                            "text/markdown": [".md", ".markdown"]
+                  },
+                  "icons": [
+                            { "src": "/unseen-march-pwa/icons/shortcut-journal.png", "sizes": "96x96", "type": "image/png" }
+                  ],
+                  "launch_type": "multiple-clients"
+          }
+    ],
+    "share_target": {
+          "action": "/unseen-march-pwa/?screen=journal",
+          "method": "GET",
+          "enctype": "application/x-www-form-urlencoded",
+          "params": { "title": "title", "text": "text", "url": "url" }
+    },
+    "protocol_handlers": [
+          { "protocol": "web+unseenmarch", "url": "/unseen-march-pwa/?action=%s" }
+    ],
+    "widgets": [
+          {
+                  "name": "Daily Check-In",
+                  "short_name": "Check-In",
+                  "description": "Quick mood check-in and today's recovery quote from The Unseen March.",
+                  "tag": "daily-checkin",
+                  "url": "/unseen-march-pwa/?screen=mood",
+                  "ms_ac_template": "/unseen-march-pwa/widgets/checkin-template.json",
+                  "data": "/unseen-march-pwa/widgets/checkin-data.json",
+                  "type": "application/json",
+                  "icons": [{ "src": "/unseen-march-pwa/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" }],
+                  "auth": false,
+                  "update": 3600
+          },
+          {
+                  "name": "Grounding Quick-Launch",
+                  "short_name": "Ground",
+                  "description": "One-tap access to grounding tools — 5-4-3-2-1 and Box Breathing.",
+                  "tag": "grounding-launch",
+                  "url": "/unseen-march-pwa/?screen=grounding",
+                  "ms_ac_template": "/unseen-march-pwa/widgets/grounding-template.json",
+                  "data": "/unseen-march-pwa/widgets/grounding-data.json",
+                  "type": "application/json",
+                  "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-grounding.png", "sizes": "96x96", "type": "image/png", "purpose": "any" }],
+                  "auth": false,
+                  "update": 86400
+          },
+          {
+                  "name": "Crisis Line",
+                  "short_name": "Crisis",
+                  "description": "One-tap Veterans Crisis Line — call, text, or chat 24/7.",
+                  "tag": "crisis-line",
+                  "url": "/unseen-march-pwa/?screen=crisis",
+                  "ms_ac_template": "/unseen-march-pwa/widgets/crisis-template.json",
+                  "data": "/unseen-march-pwa/widgets/crisis-data.json",
+                  "type": "application/json",
+                  "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-crisis.png", "sizes": "96x96", "type": "image/png", "purpose": "any" }],
+                  "auth": false,
+                  "update": 86400
+          }
+    ],
+    "shortcuts": [
+          { "name": "Grounding Tools", "short_name": "Ground", "description": "Open a grounding technique immediately", "url": "/unseen-march-pwa/?screen=grounding", "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-grounding.png", "sizes": "96x96", "type": "image/png" }] },
+          { "name": "Mood Check-In", "short_name": "Mood", "description": "Log how you are feeling right now", "url": "/unseen-march-pwa/?screen=mood", "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-mood.png", "sizes": "96x96", "type": "image/png" }] },
+          { "name": "Crisis Resources", "short_name": "Crisis", "description": "Veterans Crisis Line and emergency contacts", "url": "/unseen-march-pwa/?screen=crisis", "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-crisis.png", "sizes": "96x96", "type": "image/png" }] },
+          { "name": "Journal", "short_name": "Journal", "description": "Chapter 5 worksheets and free writing", "url": "/unseen-march-pwa/?screen=journal", "icons": [{ "src": "/unseen-march-pwa/icons/shortcut-journal.png", "sizes": "96x96", "type": "image/png" }] }
+    ],
+    "icons": [
+          { "src": "/unseen-march-pwa/icons/icon-48.png",  "sizes": "48x48",   "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-72.png",  "sizes": "72x72",   "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-144.png", "sizes": "144x144", "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-152.png", "sizes": "152x152", "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-256.png", "sizes": "256x256", "type": "image/png", "purpose": "any" },
+          { "src": "/unseen-march-pwa/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    ],
+    "screenshots": [
+          { "src": "/unseen-march-pwa/screenshots/home.png",      "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Home — Daily quote and quick actions" },
+          { "src": "/unseen-march-pwa/screenshots/grounding.png", "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Grounding Tools — 5-4-3-2-1 and Box Breathing" },
+          { "src": "/unseen-march-pwa/screenshots/mood.png",      "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Mood Check-In — Track feelings and triggers" },
+          { "src": "/unseen-march-pwa/screenshots/journal.png",   "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Journal — Chapter 5 worksheets and free writing" },
+          { "src": "/unseen-march-pwa/screenshots/crisis.png",    "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Crisis Resources — Veterans Crisis Line" }
+    ],
+    "related_applications": [
+          { "platform": "play", "url": "https://play.google.com/store/apps/details?id=com.bigsarge.unseenmarch", "id": "com.bigsarge.unseenmarch" }
+    ],
+    "scope_extensions": [
+          { "origin": "https://wayneaince-sys.github.io" },
+          { "origin": "https://big-sarge.blog" }
+    ],
+    "edge_side_panel": { "preferred_width": 430 }
+}{
   "name": "The Unseen March",
   "short_name": "Unseen March",
   "description": "A PTSD recovery guide for veterans, first responders, and trauma survivors — by Wayne Aince (Big Sarge).",
