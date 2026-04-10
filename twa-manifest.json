@@ -1,0 +1,46 @@
+{
+  "packageId": "com.bigsarge.unseenmarch",
+  "host": "wayneaince-sys.github.io",
+  "name": "The Unseen March",
+  "launcherName": "Unseen March",
+  "display": "standalone",
+  "themeColor": "#3d5c2c",
+  "navigationColor": "#131c26",
+  "navigationColorDark": "#131c26",
+  "navigationDividerColor": "#131c26",
+  "navigationDividerColorDark": "#131c26",
+  "backgroundColor": "#131c26",
+  "enableNotifications": true,
+  "startUrl": "/unseen-march-pwa/",
+  "iconUrl": "https://wayneaince-sys.github.io/unseen-march-pwa/icons/icon-512.png",
+  "maskableIconUrl": "https://wayneaince-sys.github.io/unseen-march-pwa/icons/icon-512.png",
+  "monochromeIconUrl": "https://wayneaince-sys.github.io/unseen-march-pwa/icons/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "unseenmarch"
+  },
+  "appVersionCode": 1,
+  "appVersionName": "1.0.0",
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://wayneaince-sys.github.io/unseen-march-pwa/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": { "enabled": false },
+    "playBilling": { "enabled": false }
+  },
+  "alphaDependencies": { "enabled": false },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://wayneaince-sys.github.io/unseen-march-pwa/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [
+    {
+      "type": "SHA256",
+      "value": "E3:5B:DF:9B:D3:0A:CE:67:93:7E:D3:42:FD:65:B3:70:D5:89:D1:4D:29:3D:2E:52:F6:CD:8E:72:49:4D:C0:EE"
+    }
+  ]
+}
