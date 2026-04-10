@@ -49,10 +49,32 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+
 }
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+...rest of your page...
+
+    <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const reg = await navigator.serviceWorker.register(
+            '/unseen-march-pwa/sw.js',
+            { scope: '/unseen-march-pwa/' }
+          );
+          if ('sync' in reg) {
+            await reg.sync.register('unseen-march-bg-sync');
+          }
+        } catch (err) {
+          console.error('[SW] Registration failed:', err);
+        }
+      });
+    }
+    </script>
+  </body>
+</html>
 }
