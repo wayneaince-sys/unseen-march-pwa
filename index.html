@@ -34,8 +34,6 @@
   #splash.hidden {
     opacity: 0;
     pointer-events: none;
-    -webkit-transition: opacity 0.4s ease;
-    transition: opacity 0.4s ease;
   }
   #splash-logo {
     width: 72px;
@@ -70,7 +68,6 @@
     -webkit-animation: spin 0.75s linear infinite;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    -webkit-perspective: 1000;
   }
   @-webkit-keyframes spin {
     to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
@@ -97,27 +94,30 @@
 
   <script>
     (function() {
+      var startTime = Date.now();
+      var MIN_DISPLAY = 1200; // splash always visible for at least 1.2 seconds
+      var dismissed = false;
+
       function hideSplash() {
-        var splash = document.getElementById('splash');
-        if (splash && !splash.classList.contains('hidden')) {
-          splash.classList.add('hidden');
-          setTimeout(function() {
-            if (splash.parentNode) splash.parentNode.removeChild(splash);
-          }, 500);
-        }
+        if (dismissed) return;
+        var elapsed = Date.now() - startTime;
+        var remaining = Math.max(0, MIN_DISPLAY - elapsed);
+        setTimeout(function() {
+          if (dismissed) return;
+          dismissed = true;
+          var splash = document.getElementById('splash');
+          if (splash) {
+            splash.classList.add('hidden');
+            setTimeout(function() {
+              if (splash.parentNode) splash.parentNode.removeChild(splash);
+            }, 500);
+          }
+        }, remaining);
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', hideSplash);
-      } else {
-        // DOM already ready (cached navigation) — wait 800ms so splash is visible
-        setTimeout(hideSplash, 800);
-      }
-
+      document.addEventListener('DOMContentLoaded', hideSplash);
       window.addEventListener('load', hideSplash);
-
-      // Hard fallback — dismiss after 3 seconds no matter what
-      setTimeout(hideSplash, 3000);
+      setTimeout(hideSplash, 4000); // hard fallback
     })();
   </script>
 
