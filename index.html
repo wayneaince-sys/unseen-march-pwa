@@ -14,7 +14,6 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/unseen-march-pwa/icons/icon-192.png">
 <link rel="stylesheet" href="/unseen-march-pwa/assets/app.css">
 <style>
-  /* Splash — visible while JS loads */
   #splash {
     position: fixed;
     inset: 0;
@@ -83,7 +82,6 @@
 </head>
 <body>
 
-  <!-- Splash screen -->
   <div id="splash">
     <div id="splash-logo">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -95,10 +93,8 @@
     <div class="spinner"></div>
   </div>
 
-  <!-- React mounts here -->
   <div id="root"></div>
 
-  <!-- Guaranteed splash dismissal — fires on every navigation including back-button -->
   <script>
     (function() {
       function hideSplash() {
@@ -111,15 +107,13 @@
         }
       }
 
-      // Fire on DOMContentLoaded
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', hideSplash);
-      } } else {
-  setTimeout(hideSplash, 900);
-}
+      } else {
+        // DOM already ready (cached navigation) — wait 800ms so splash is visible
+        setTimeout(hideSplash, 800);
       }
 
-      // Fire on window load (after all resources)
       window.addEventListener('load', hideSplash);
 
       // Hard fallback — dismiss after 3 seconds no matter what
@@ -127,10 +121,8 @@
     })();
   </script>
 
-  <!-- App bundle -->
   <script type="module" src="/unseen-march-pwa/assets/app.js"></script>
 
-  <!-- Service Worker registration -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', async function() {
@@ -151,7 +143,3 @@
 
 </body>
 </html>
-    </script>
-  </body>
-</html>
-}
