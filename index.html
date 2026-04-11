@@ -14,8 +14,8 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/unseen-march-pwa/icons/icon-192.png">
 <link rel="stylesheet" href="/unseen-march-pwa/assets/app.css">
 <style>
-  /* Hide the static status bar rendered by the React app */
   .status-bar { display: none !important; }
+  a[href="https://www.perplexity.ai/computer"] { display: none !important; }
 
   #splash {
     position: fixed;
@@ -34,67 +34,42 @@
     transform: translateZ(0);
     will-change: opacity;
   }
-  #splash.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
+  #splash.hidden { opacity: 0; pointer-events: none; }
   #splash-logo {
-    width: 72px;
-    height: 72px;
-    border-radius: 18px;
-    background: #1a2f1a;
-    border: 2px solid #3d5c2c;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 72px; height: 72px; border-radius: 18px;
+    background: #1a2f1a; border: 2px solid #3d5c2c;
+    display: flex; align-items: center; justify-content: center;
   }
-  #splash-title {
-    font-family: Georgia, serif;
-    font-size: 1.4rem;
-    color: #c9a84c;
-    letter-spacing: 0.05em;
-  }
-  #splash-sub {
-    font-family: Georgia, serif;
-    font-size: 0.8rem;
-    color: #607060;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  #splash-title { font-family: Georgia, serif; font-size: 1.4rem; color: #c9a84c; letter-spacing: 0.05em; }
+  #splash-sub { font-family: Georgia, serif; font-size: 0.8rem; color: #607060; letter-spacing: 0.08em; text-transform: uppercase; }
   .spinner {
-    width: 26px;
-    height: 26px;
+    width: 26px; height: 26px;
     border: 3px solid rgba(255,255,255,0.12);
-    border-top-color: #3d5c2c;
-    border-radius: 50%;
+    border-top-color: #3d5c2c; border-radius: 50%;
     animation: spin 0.75s linear infinite;
     -webkit-animation: spin 0.75s linear infinite;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
   }
-  @-webkit-keyframes spin {
-    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-  }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
+  @-webkit-keyframes spin { to { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Privacy policy footer link */
   #app-footer {
+    position: fixed;
+    bottom: 70px;
+    left: 0; right: 0;
     text-align: center;
-    padding: 12px 0 20px;
-    font-family: Georgia, serif;
+    pointer-events: none;
+    z-index: 100;
   }
   #app-footer a {
-    font-size: 0.75rem;
-    color: #607060;
-    text-decoration: none;
-    letter-spacing: 0.04em;
+    pointer-events: all;
+    font-size: 0.7rem; color: #607060;
+    text-decoration: none; letter-spacing: 0.04em;
+    font-family: Georgia, serif;
+    background: rgba(19,28,38,0.85);
+    padding: 3px 10px; border-radius: 20px;
   }
-  #app-footer a:hover {
-    color: #c9a84c;
-    text-decoration: underline;
-  }
+  #app-footer a:hover { color: #c9a84c; }
 </style>
 </head>
 <body>
@@ -112,15 +87,30 @@
 
   <div id="root"></div>
 
-  <!-- Privacy Policy footer link -->
   <div id="app-footer">
     <a href="/unseen-march-pwa/privacy-policy.html">Privacy Policy</a>
   </div>
 
   <script>
     (function() {
-      var startTime = Date.now();
       var MIN_DISPLAY = 1200;
+
+      function showSplash() {
+        var existing = document.getElementById('splash');
+        if (existing) existing.remove();
+        var splash = document.createElement('div');
+        splash.id = 'splash';
+        splash.innerHTML = '<div id="splash-logo"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></div><div id="splash-title">Unseen March</div><div id="splash-sub">PTSD Recovery Companion</div><div class="spinner"></div>';
+        document.body.insertBefore(splash, document.body.firstChild);
+        setTimeout(function() {
+          splash.classList.add('hidden');
+          setTimeout(function() {
+            if (splash.parentNode) splash.parentNode.removeChild(splash);
+          }, 500);
+        }, MIN_DISPLAY);
+      }
+
+      var startTime = Date.now();
       var dismissed = false;
 
       function hideSplash() {
@@ -143,6 +133,13 @@
       document.addEventListener('DOMContentLoaded', hideSplash);
       window.addEventListener('load', hideSplash);
       setTimeout(hideSplash, 4000);
+
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          dismissed = false;
+          showSplash();
+        }
+      });
     })();
   </script>
 
