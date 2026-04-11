@@ -111,13 +111,13 @@
         document.addEventListener('DOMContentLoaded', hideSplash);
       } else {
         // DOM already ready (cached navigation) — wait 800ms so splash is visible
-        setTimeout(hideSplash, 2000);
+        setTimeout(hideSplash, 800);
       }
 
       window.addEventListener('load', hideSplash);
 
       // Hard fallback — dismiss after 3 seconds no matter what
-      setTimeout(hideSplash, 800);
+      setTimeout(hideSplash, 3000);
     })();
   </script>
 
