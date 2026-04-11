@@ -14,6 +14,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/unseen-march-pwa/icons/icon-192.png">
 <link rel="stylesheet" href="/unseen-march-pwa/assets/app.css">
 <style>
+  /* Hide the static status bar rendered by the React app */
+  .status-bar { display: none !important; }
+
   #splash {
     position: fixed;
     inset: 0;
@@ -75,6 +78,23 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+
+  /* Privacy policy footer link */
+  #app-footer {
+    text-align: center;
+    padding: 12px 0 20px;
+    font-family: Georgia, serif;
+  }
+  #app-footer a {
+    font-size: 0.75rem;
+    color: #607060;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  #app-footer a:hover {
+    color: #c9a84c;
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
@@ -92,10 +112,15 @@
 
   <div id="root"></div>
 
+  <!-- Privacy Policy footer link -->
+  <div id="app-footer">
+    <a href="/unseen-march-pwa/privacy-policy.html">Privacy Policy</a>
+  </div>
+
   <script>
     (function() {
       var startTime = Date.now();
-      var MIN_DISPLAY = 1200; // splash always visible for at least 1.2 seconds
+      var MIN_DISPLAY = 1200;
       var dismissed = false;
 
       function hideSplash() {
@@ -117,7 +142,7 @@
 
       document.addEventListener('DOMContentLoaded', hideSplash);
       window.addEventListener('load', hideSplash);
-      setTimeout(hideSplash, 4000); // hard fallback
+      setTimeout(hideSplash, 4000);
     })();
   </script>
 
