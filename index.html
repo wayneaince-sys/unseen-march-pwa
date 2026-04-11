@@ -1,68 +1,141 @@
-/* Splash — visible while JS loads */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Unseen March</title>
 <link rel="manifest" href="/unseen-march-pwa/manifest.json">
 <meta name="theme-color" content="#131c26">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Unseen March">
-#splash {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: #131c26;
-  z-index: 9999;
-  opacity: 1;  /* ADDED: explicit initial opacity */
-  transition: opacity 0.4s ease;
-  -webkit-transition: opacity 0.4s ease;  /* ADDED: Safari support */
-  -webkit-transform: translateZ(0);  /* ADDED: hardware acceleration */
-  transform: translateZ(0);
-  will-change: opacity;  /* ADDED: render optimization */
-}
-
-#splash.hidden {
-  opacity: 0;
-  pointer-events: none;
-  -webkit-transition: opacity 0.4s ease;  /* ADDED: Safari support */
-  transition: opacity 0.4s ease;
-}
-
-.spinner {
-  width: 26px;
-  height: 26px;
-  border: 3px solid rgba(255,255,255,0.12);
-  border-top-color: #3d5c2c;
-  border-radius: 50%;
-  animation: spin 0.75s linear infinite;
-  -webkit-animation: spin 0.75s linear infinite;  /* ADDED: Safari support */
-  backface-visibility: hidden;  /* ADDED: animation stability */
-  -webkit-backface-visibility: hidden;  /* ADDED: Safari support */
-  -webkit-perspective: 1000;  /* ADDED: Safari support */
-}
-
-/* ADDED: Safari keyframes */
-@-webkit-keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+<link rel="apple-touch-icon" href="/unseen-march-pwa/icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/unseen-march-pwa/icons/icon-192.png">
+<link rel="stylesheet" href="/unseen-march-pwa/assets/app.css">
+<style>
+  /* Splash — visible while JS loads */
+  #splash {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: #131c26;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+    -webkit-transition: opacity 0.4s ease;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: opacity;
   }
-
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  #splash.hidden {
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease;
   }
-...rest of your page...
+  #splash-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: #1a2f1a;
+    border: 2px solid #3d5c2c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #splash-title {
+    font-family: Georgia, serif;
+    font-size: 1.4rem;
+    color: #c9a84c;
+    letter-spacing: 0.05em;
+  }
+  #splash-sub {
+    font-family: Georgia, serif;
+    font-size: 0.8rem;
+    color: #607060;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .spinner {
+    width: 26px;
+    height: 26px;
+    border: 3px solid rgba(255,255,255,0.12);
+    border-top-color: #3d5c2c;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+    -webkit-animation: spin 0.75s linear infinite;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
 
-    <script>
+  <!-- Splash screen -->
+  <div id="splash">
+    <div id="splash-logo">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>
+      </svg>
+    </div>
+    <div id="splash-title">Unseen March</div>
+    <div id="splash-sub">PTSD Recovery Companion</div>
+    <div class="spinner"></div>
+  </div>
+
+  <!-- React mounts here -->
+  <div id="root"></div>
+
+  <!-- Guaranteed splash dismissal — fires on every navigation including back-button -->
+  <script>
+    (function() {
+      function hideSplash() {
+        var splash = document.getElementById('splash');
+        if (splash && !splash.classList.contains('hidden')) {
+          splash.classList.add('hidden');
+          setTimeout(function() {
+            if (splash.parentNode) splash.parentNode.removeChild(splash);
+          }, 500);
+        }
+      }
+
+      // Fire on DOMContentLoaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hideSplash);
+      } else {
+        // DOM already ready (cached navigation)
+        hideSplash();
+      }
+
+      // Fire on window load (after all resources)
+      window.addEventListener('load', hideSplash);
+
+      // Hard fallback — dismiss after 3 seconds no matter what
+      setTimeout(hideSplash, 3000);
+    })();
+  </script>
+
+  <!-- App bundle -->
+  <script type="module" src="/unseen-march-pwa/assets/app.js"></script>
+
+  <!-- Service Worker registration -->
+  <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', async () => {
+      window.addEventListener('load', async function() {
         try {
-          const reg = await navigator.serviceWorker.register(
+          var reg = await navigator.serviceWorker.register(
             '/unseen-march-pwa/sw.js',
             { scope: '/unseen-march-pwa/' }
           );
@@ -74,6 +147,10 @@
         }
       });
     }
+  </script>
+
+</body>
+</html>
     </script>
   </body>
 </html>
