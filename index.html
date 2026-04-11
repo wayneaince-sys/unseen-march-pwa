@@ -114,9 +114,9 @@
       // Fire on DOMContentLoaded
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', hideSplash);
-      } else {
-        // DOM already ready (cached navigation)
-        hideSplash();
+      } } else {
+  setTimeout(hideSplash, 900);
+}
       }
 
       // Fire on window load (after all resources)
