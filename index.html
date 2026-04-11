@@ -103,15 +103,15 @@
           splash.classList.add('hidden');
           setTimeout(function() {
             if (splash.parentNode) splash.parentNode.removeChild(splash);
-          }, 500);
+          }, 800);
         }
       }
 
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', hideSplash);
       } else {
-        // DOM already ready (cached navigation) — wait 800ms so splash is visible
-        setTimeout(hideSplash, 1000);
+        // DOM already ready (cached navigation) — wait 2000ms so splash is visible
+        setTimeout(hideSplash, 2000);
       }
 
       window.addEventListener('load', hideSplash);
