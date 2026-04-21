@@ -162,6 +162,142 @@
       });
     }
   </script>
+<!-- ============================================================
+     UNSEEN MARCH — JOURNAL LOCAL STORAGE PATCH
+     
+     PURPOSE: Intercepts the broken /api/journal network calls
+     and saves journal entries to the browser's localStorage
+     instead. Entries stay on the user's device, never leave.
+     
+     HOW TO INSTALL:
+     1. Open your repo on GitHub: wayneaince-sys/unseen-march-pwa
+     2. Click on index.html
+     3. Click the pencil icon to edit
+     4. Find the closing </body> tag near the bottom of the file
+     5. Paste EVERYTHING FROM THIS COMMENT'S END through the
+        closing </script> tag IMMEDIATELY BEFORE </body>
+     6. Scroll down, write a commit message ("Add journal save patch")
+     7. Click "Commit changes"
+     8. Wait 60-90 seconds for GitHub Pages to rebuild
+     9. Hard-refresh the app (Ctrl+Shift+R) and test save
+     ============================================================ -->
 
+<script>
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'unseen_march_journal_entries';
+  // Matches /api/journal, /api/journal/, /api/journal/anything
+  var API_MATCH = /\/api\/journal(\/|$|\?)/i;
+
+  function getEntries() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      console.warn('[Unseen March] Could not read stored entries:', e);
+      return [];
+    }
+  }
+
+  function saveEntries(entries) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      return true;
+    } catch (e) {
+      console.error('[Unseen March] localStorage write failed:', e);
+      return false;
+    }
+  }
+
+  function makeResponse(payload, status) {
+    return new Response(JSON.stringify(payload), {
+      status: status || 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  function generateId() {
+    return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+  }
+
+  // Monkey-patch fetch
+  var originalFetch = window.fetch.bind(window);
+
+  window.fetch = function (input, init) {
+    var url = (typeof input === 'string') ? input : (input && input.url) || '';
+
+    if (API_MATCH.test(url)) {
+      var method = ((init && init.method) || (input && input.method) || 'GET').toUpperCase();
+
+      // SAVE (POST / PUT)
+      if (method === 'POST' || method === 'PUT') {
+        var entryData = {};
+        try {
+          var body = init && init.body;
+          if (typeof body === 'string' && body.length) {
+            entryData = JSON.parse(body);
+          } else if (body instanceof FormData) {
+            body.forEach(function (value, key) { entryData[key] = value; });
+          } else if (body && typeof body === 'object') {
+            entryData = body;
+          }
+        } catch (parseErr) {
+          entryData = { rawBody: String((init && init.body) || '') };
+        }
+
+        var entry = Object.assign(
+          { id: generateId(), createdAt: new Date().toISOString() },
+          entryData
+        );
+
+        var entries = getEntries();
+        entries.push(entry);
+        var ok = saveEntries(entries);
+
+        console.log('[Unseen March] Journal entry saved locally:', entry);
+        return Promise.resolve(
+          ok
+            ? makeResponse({ success: true, entry: entry, id: entry.id }, 200)
+            : makeResponse({ success: false, error: 'storage_unavailable' }, 507)
+        );
+      }
+
+      // LIST (GET)
+      if (method === 'GET') {
+        return Promise.resolve(makeResponse(getEntries(), 200));
+      }
+
+      // DELETE
+      if (method === 'DELETE') {
+        var remaining = getEntries();
+        // Try to extract an id from the URL tail
+        var match = url.match(/\/api\/journal\/([^\/\?]+)/i);
+        if (match && match[1]) {
+          remaining = remaining.filter(function (e) { return String(e.id) !== match[1]; });
+          saveEntries(remaining);
+        }
+        return Promise.resolve(makeResponse({ success: true }, 200));
+      }
+
+      // Anything else — acknowledge
+      return Promise.resolve(makeResponse({ success: true }, 200));
+    }
+
+    // Not our endpoint — pass through untouched
+    return originalFetch.apply(this, arguments);
+  };
+
+  // Expose a helper for debugging — run in DevTools console to view all entries:
+  //     unseenMarchDebug.listEntries()
+  window.unseenMarchDebug = {
+    listEntries: function () { console.table(getEntries()); return getEntries(); },
+    clearEntries: function () { localStorage.removeItem(STORAGE_KEY); console.log('Cleared.'); },
+    entryCount: function () { return getEntries().length; }
+  };
+
+  console.log('[Unseen March] Journal local-storage patch active. Entries save to this device only.');
+})();
+</script>
 </body>
 </html>
