@@ -1,0 +1,12 @@
+# Node / Capacitor (iOS build-out)
+node_modules/
+www/
+
+# Capacitor iOS native build artifacts (the App project itself IS committed)
+ios/App/Pods/
+ios/App/App/public/
+ios/App/build/
+ios/.DS_Store
+DerivedData/
+*.xcuserstate
+xcuserdata/
