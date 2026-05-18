@@ -1,0 +1,52 @@
+/* ============================================================
+   Unseen March — accessibility overrides
+   Loaded AFTER app.css. Resolves Major findings from the
+   accessibility audit. Override-only: no app logic, no layout
+   refactor. Safe to tune/revert in isolation.
+   Audience: older veterans, PTSD/TBI, visual fatigue.
+   ============================================================ */
+
+/* --- Major: safe-area / notch (HIG: Layout — Safe Areas) ---
+   viewport-fit=cover + black-translucent status bar means content
+   can sit under the notch / Dynamic Island. app.css already insets
+   the bottom nav; inset the top/sides of the app shell here. */
+.app-shell {
+  padding-top: max(env(safe-area-inset-top, 0px), 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* --- Major: tap targets >= 44x44 (HIG: best practice; WCAG 2.5.5) ---
+   Applies to genuine controls only. Inline text links in prose are
+   exempt (2.5.5 inline exception) and intentionally untouched. */
+button,
+[role="button"],
+a[role="button"],
+.bottom-nav-item,
+input[type="button"],
+input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
+select {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* --- Major: accent-button contrast (WCAG 1.4.3) ---
+   amber/cyan/orange-500 fills with light text fall ~2:1. Darken the
+   solid fills to the 700 step so white/near-white labels clear AA
+   (>= ~5:1); dark labels remain high-contrast too. Tints (/5 /10
+   /15) are decorative and left as-is. NOTE: this is a visible brand
+   shift on solid accent buttons — confirm on device. */
+.bg-amber-500:not([class*="/"]) { background-color: #b45309 !important; }
+.bg-cyan-500:not([class*="/"])  { background-color: #0e7490 !important; }
+.bg-orange-500:not([class*="/"]) { background-color: #c2410c !important; }
+
+/* Keep a visible focus ring on the larger tap targets for
+   keyboard / switch-control users (WCAG 2.4.7). */
+button:focus-visible,
+[role="button"]:focus-visible,
+.bottom-nav-item:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: 2px;
+}
