@@ -34,3 +34,5 @@ Goal: ship an iOS App Store build alongside the existing Google Play Android (TW
 - **[build]** Set `MARKETING_VERSION = 1.0.0`, `CURRENT_PROJECT_VERSION = 1`. `DEVELOPMENT_TEAM` left blank for the user to set in Xcode (automatic signing).
 - **[a11y]** Ran accessibility review on the in-app web content → `docs/ACCESSIBILITY_AUDIT.md`. 1 Critical (`text-size-adjust:100%` defeats iOS Dynamic Type), 4 Major (safe-area top, 44px tap targets, footer/accent contrast). Core body contrast and reduced-motion are strong; crisis CTAs reachable.
 - **[docs]** Wrote `docs/IOS_SUBMISSION_GUIDE.md` — full Xcode/App Store Connect path: machine setup, App ID, signing, archive/upload, metadata, privacy (Data Not Collected), age rating, review notes, release hygiene.
+- **[vcs]** Pushed `ios-build` to origin. PR not auto-opened (no `gh`/token on machine) — open via https://github.com/wayneaince-sys/unseen-march-pwa/pull/new/ios-build
+- **[log]** Created Notion page "Unseen March — iOS Build-Out Log" (https://www.notion.so/3648a82d008681e7999cde848a747196). No Slack project channel exists; left a Slack draft in the user's DM to place manually.
