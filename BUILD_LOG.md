@@ -26,3 +26,17 @@ iOS (Capacitor) build-out to TestFlight parity with the live Google Play Android
 - BLOCKERS: none (Xcode/CocoaPods install still pending for build steps)
 - SCREENSHOTS: n/a
 - HIG/RESOURCE REFERENCES: HIG — Home Screen Quick Actions, Layout, Launching
+
+### PHASE 1 — iOS Wrap Scaffolding
+- DATE: 2026-05-18
+- COMMIT: 7c7415b (scaffold) + log commit
+- BRANCH: feature/ios-phase-1-wrap (off master)
+- WHAT SHIPPED:
+  - Added Capacitor 8 iOS platform — uses Swift Package Manager, so CocoaPods is NOT required (one less blocker)
+  - App identity wired: name "Unseen March", bundle id com.bigsarge.unseenmarch (matches the live Android app), universal iPhone + iPad, supports iOS 15+ (older iPhones, fits the veteran audience)
+  - Bundled the existing web app into the native project; added a one-command build that rewrites the website's /unseen-march-pwa/ paths to work inside the app (the live website is left untouched)
+  - Native project generated cleanly; node_modules and generated folders kept out of version control
+- WHAT'S NEXT: Phase 2 — App Store identity, signing, and capabilities in Xcode
+- BLOCKERS: Full Xcode.app still required to open/build/archive (only Command Line Tools installed). Capacitor scaffolding itself succeeded without it
+- SCREENSHOTS: n/a (Phase 3 simulator pass)
+- HIG/RESOURCE REFERENCES: HIG — Launching (launch screen), Layout (safe areas, universal iPhone/iPad). Service workers do not run under Capacitor's iOS scheme — offline-cache parity will use Capacitor's native mechanisms, addressed in a later phase
