@@ -95,6 +95,15 @@
   </div>
 
   <script>
+    // Hide the floating Privacy footer when running inside the native
+    // (Capacitor) app — it overlaps the in-app bottom navigation. Stays
+    // visible on the web where it belongs.
+    if (window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform()) {
+      document.documentElement.classList.add('app-native');
+    }
+  </script>
+
+  <script>
     (function() {
       var MIN_DISPLAY = 1200;
 
