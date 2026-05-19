@@ -85,3 +85,11 @@ iOS (Capacitor) build-out to TestFlight parity with the live Google Play Android
 - BLOCKERS: none for progress
 - SCREENSHOTS: docs/ios-simulator-screens/home_iPhone17e_portrait.png, home_iPhone17ProMax_portrait.png, home_iPadPro11_portrait.png
 - HIG/RESOURCE REFERENCES: HIG — Layout (Safe Areas / Dynamic Island), Adaptivity and Layout (orientation), iPad parity. Apple Design Resources — production templates noted for Phase 6 listing assets
+
+#### Phase 3 follow-up — a11y merge + stack rebase + regression verification (2026-05-19)
+- Wayne's call: merged both a11y branches → `master` (also deploys fixes to the live GitHub Pages site), then rebased the iOS phase stack onto master.
+- `master` a1f6f2e (normal push). Rebased: phase-1 24ab5f8 → phase-2 744fdb2 → phase-3 b3e0536 (force-with-lease; master never force-pushed). `fix/a11y-*` branches now merged.
+- Rebuilt the bundled app (a11y.css now ships inside the iOS bundle) and re-tested on iPhone 17 Pro Max:
+  - **Safe-area top (Major): RESOLVED** — header now sits cleanly below the Dynamic Island / status bar. Evidence: docs/ios-simulator-screens/home_iPhone17ProMax_portrait_a11yfixed.png (vs the pre-fix home_iPhone17ProMax_portrait.png).
+  - **Footer pill overlap (Minor): STILL OPEN** — `#app-footer{bottom:70px}` in index.html inline CSS still clips the web bottom-nav. Low priority; candidate fix: raise the offset or suppress the floating footer in standalone (privacy policy remains reachable in-app). Deferred — not a Phase 4 blocker.
+- Net: the only Major layout regression from Phase 3 is fixed and verified on a device-class simulator; all 5 accessibility fixes (1 Critical + 4 Major) are now in the iOS build and the live site.
