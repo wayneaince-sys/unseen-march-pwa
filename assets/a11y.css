@@ -50,3 +50,10 @@ button:focus-visible,
   outline: 2px solid #c9a84c;
   outline-offset: 2px;
 }
+
+/* --- Minor: floating Privacy footer overlap (Phase 3 device finding) ---
+   The #app-footer pill (defined in index.html) sits at bottom:70px and
+   clips the in-app bottom navigation when running inside the Capacitor
+   (or any standalone) app. Hide it there; remains visible on the web. */
+.app-native #app-footer { display: none !important; }
+@media (display-mode: standalone) { #app-footer { display: none !important; } }
