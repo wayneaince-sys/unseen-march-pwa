@@ -160,3 +160,11 @@ HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layou
 - WHAT'S NEXT: listing copy in Cowork → submit for App Store review when ready (TestFlight build 1.0.0(2) already processed & tested)
 - BLOCKERS: none
 - HIG/RESOURCE REFERENCES: Apple Design Resources — Production Templates (1024 icon, screenshot frames); App Store Connect — App Privacy, Age Rating, App Review Guideline 4.2
+
+#### Phase 6 follow-up — footer-pill fix + full screenshot set (2026-05-19)
+- **Footer-pill (Minor) RESOLVED.** Source fix on `fix/footer-pill-native-hide` (commit 2454b3c) — detects `window.Capacitor.isNativePlatform()` and adds `.app-native` to documentElement; assets/a11y.css hides `#app-footer` for that class plus `(display-mode: standalone)`. Live website unaffected. Merged to master (deploys to live site too) and cherry-picked into phase-6. Verified clean on iPhone 17 Pro Max simulator with bundle rebuilt.
+- **Full screenshot set captured.** 5 screens × 2 device classes = 10 marketing-ready PNGs in `docs/app-store/`:
+  - iPhone 6.9" (1320×2868): home, grounding, mood, journal, crisis
+  - iPad 13"  (2064×2752): home, grounding, mood, journal, crisis
+- **Technique:** Capacitor SPA uses hash routing, not the manifest's `?screen=` convention. Discovered via bundle inspection; injected `history.replaceState({},'','#/<screen>')` into the App.app's bundled `public/index.html` before the app.js module loads, then installed/launched/screenshot per device. Canonical bundle restored after capture.
+- All Phase 6 listing assets now complete and ready for Cowork to write copy against.

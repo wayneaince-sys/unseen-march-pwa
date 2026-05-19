@@ -74,15 +74,20 @@ honor the audience (veterans, first responders, trauma survivors, families).
 
 ## Asset inventory (this folder: docs/app-store/)
 - `icon-1024.png` — 1024×1024, no alpha → **App Store marketing icon, ready**
-- `screen_iPhone69_01_home.png` — 1320×2868 → **6.9" iPhone (required), Home**
-- `screen_iPad13_01_home.png` — 2064×2752 → **13" iPad (required), Home**
 
-### Screenshot gap (action for Wayne / Cowork)
-Only **Home** is captured (reliable headless sim automation can't tap through
-the WebView SPA). For a strong listing, capture 3–5 key screens — **Grounding,
-Mood Check-In, Journal, Crisis Resources** — at the two required sizes. Easiest
-path now: the app is on Wayne's TestFlight device — screenshot there
-(Settings → Display: default text size), or boot iPhone 6.9" + iPad 13"
-simulators and navigate manually. Apple production templates (developer.apple
-.com/design/resources) can frame them if Wayne wants the framed treatment;
-plain device screenshots are also accepted.
+**6.9" iPhone screenshots (1320×2868, required slot):**
+- `screen_iPhone69_01_home.png` — Home (daily quote, streak counters, Quick Actions, Crisis Resources, book promo)
+- `screen_iPhone69_02_grounding.png` — Grounding Tools (5‑4‑3‑2‑1, Box Breathing, Cold Water Anchor, Progressive Muscle Relaxation)
+- `screen_iPhone69_03_mood.png` — Mood & Triggers (Check‑In + Arousal Ladder: Baseline/Yellow/Orange/Red)
+- `screen_iPhone69_04_journal.png` — Journal (Chapter 5 worksheets + free writing; references *The Unseen March*)
+- `screen_iPhone69_05_crisis.png` — Crisis Resources (Veterans Crisis Line 988, Crisis Text Line, SAMHSA, 911)
+
+**13" iPad screenshots (2064×2752, required slot):**
+- `screen_iPad13_01_home.png` … `screen_iPad13_05_crisis.png` — same five screens, iPad rendering
+
+Captured with the footer‑pill fix landed (Privacy pill correctly hidden in the
+native app). Navigation driven by the SPA's hash router (`#/grounding`,
+`#/mood`, `#/journal`, `#/crisis`) — not the manifest's `?screen=` convention.
+Apple production templates (developer.apple.com/design/resources) can frame
+these if Cowork wants the framed marketing treatment; plain device captures
+are also accepted by App Store Connect.
