@@ -61,3 +61,8 @@ iOS (Capacitor) build-out to TestFlight parity with the live Google Play Android
   - In Xcode: open `ios/App/App.xcodeproj`, target App → Signing & Capabilities → Automatic, select Apple Developer team
 - SCREENSHOTS: n/a (Phase 3)
 - HIG/RESOURCE REFERENCES: HIG — App Icons (no alpha, 1024), Launching, Status Bars. Apple — Associated Domains (requires App ID capability + AASA; intentionally deferred)
+
+#### Phase 2 verification (2026-05-18, post platform install)
+- iOS 26.5 platform SDK + simulator runtime installed (iPhone 17 Pro/Max/17e, iPads)
+- Clean **no-signing build for "Any iOS Device" → BUILD SUCCEEDED** (xcodebuild, SPM graph resolved, no project errors). Phase 2 build requirement satisfied.
+- Remaining open (non-blocking, deferred to their phases): development provisioning profile needs a registered device (Phase 4 — connect iPhone); App Store distribution profile generated at archive (Phase 5). "no devices" signing message is expected and harmless until then.
