@@ -141,3 +141,7 @@ HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layou
 - WHAT'S NEXT: Phase 6 — listing-prep handoff (Cowork holds the manuscript / writes store copy)
 - BLOCKERS: none on the build; remaining steps are Apple-account interactive
 - HIG/RESOURCE REFERENCES: Apple — App Store Connect (TestFlight internal testing), Export Compliance; App Store distribution signing
+
+#### Phase 5 upload (2026-05-19)
+- Wayne ran Organizer **Validate App** (passed) then **Distribute App → App Store Connect → Upload** for **1.0.0 (2)**. Build submitted to App Store Connect; processing pending.
+- Remaining (Apple-account interactive): ensure App Store Connect app record exists for com.bigsarge.unseenmarch; after processing, create internal TestFlight group + add Wayne as tester.
