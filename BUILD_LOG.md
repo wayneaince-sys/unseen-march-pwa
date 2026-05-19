@@ -145,3 +145,4 @@ HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layou
 #### Phase 5 upload (2026-05-19)
 - Wayne ran Organizer **Validate App** (passed) then **Distribute App → App Store Connect → Upload** for **1.0.0 (2)**. Build submitted to App Store Connect; processing pending.
 - Remaining (Apple-account interactive): ensure App Store Connect app record exists for com.bigsarge.unseenmarch; after processing, create internal TestFlight group + add Wayne as tester.
+- Build **1.0.0 (2)** completed App Store Connect processing — App Apple ID **6770785464**, SKU unseenmarch-ios, app record live. Pipeline proven end-to-end (archive → upload → processed → Ready). Remaining: create internal TestFlight group + add tester (Wayne) to trigger the tester invite.
