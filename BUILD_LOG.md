@@ -127,3 +127,17 @@ BLOCKERS: none. Open (deferred, non-blocking): Minor footer-pill overlap (Phase 
 SCREENSHOTS: n/a (Phase 3 holds the captures)
 HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layout (full screen, safe areas)
 ```
+
+### PHASE 5 — TestFlight Build
+- DATE: 2026-05-19
+- BRANCH: feature/ios-phase-5-testflight (stacked on Phase 4)
+- TAG: **v1.0.0-ios-tf1** (first TestFlight-ready build)
+- VERSION: 1.0.0 (1) — build 1 kept; App Store Connect has no prior build, so it's the clean first upload
+- WHAT SHIPPED (validated by me, CLI):
+  - Release **ARCHIVE SUCCEEDED**; App Store **EXPORT SUCCEEDED** → distribution-signed `App.ipa`. `-allowProvisioningUpdates` auto-created the Distribution cert + App Store provisioning profile; no agreement/cert blocker hit.
+  - `ITSAppUsesNonExemptEncryption=false` added (HTTPS-only = exempt) so TestFlight stops asking export compliance every build (commit 6dded92).
+  - Archive placed in Xcode Organizer (`~/Library/Developer/Xcode/Archives/2026-05-19/UnseenMarch.xcarchive`) for GUI upload.
+- INTERACTIVE / USER-SIDE (Apple account — cannot be automated): create the App Store Connect app record, accept Free/Paid agreements, the actual upload auth, and TestFlight internal-group setup. Runbook delivered to Wayne.
+- WHAT'S NEXT: Phase 6 — listing-prep handoff (Cowork holds the manuscript / writes store copy)
+- BLOCKERS: none on the build; remaining steps are Apple-account interactive
+- HIG/RESOURCE REFERENCES: Apple — App Store Connect (TestFlight internal testing), Export Compliance; App Store distribution signing
