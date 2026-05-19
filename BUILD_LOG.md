@@ -109,4 +109,21 @@ iOS (Capacitor) build-out to TestFlight parity with the live Google Play Android
   6. Background resume: **PASS**
   7. Crisis path (988 / text / chat deep links): **PASS**
   - Push: N/A v1.0 by design (no APNs server; Android parity)
-- FINDING — Dynamic Type (#3): `-webkit-text-size-adjust:auto` (the Critical audit fix) is necessary but not sufficient in a WKWebView; it governs Safari text-inflation, not the iOS Text Size slider. True Dynamic Type in a webview wrap requires a native bridge: read `UIContentSizeCategory` and inject a root font-size scale (the app's Tailwind rem scale keys off root, so a single root-px scale propagates app-wide). Parity note: the Android TWA also does not bind to the OS font-size slider, so this is an enhancement beyond strict parity — decision pending (native bridge now vs. logged fast-follow).
+- FINDING — Dynamic Type (#3): `-webkit-text-size-adjust:auto` (the Critical audit fix) is necessary but not sufficient in a WKWebView; it governs Safari text-inflation, not the iOS Text Size slider. True Dynamic Type in a webview wrap requires a native bridge: read `UIContentSizeCategory` and inject a root font-size scale (the app's Tailwind rem scale keys off root, so a single root-px scale propagates app-wide).
+- RESOLUTION — Dynamic Type (#3): Wayne chose to implement the native bridge now. Added to AppDelegate (commit 9db3d07): maps `preferredContentSizeCategory` → root font-size multiplier, injects into the bundled WKWebView, re-applies on the content-size notification and on becoming active. Isolated to AppDelegate; no app-logic refactor. Rebuilt, reinstalled, **re-tested on device → PASS**. Phase 4 now **7/7**.
+
+```
+PHASE: 4 — Physical-Device Pass
+DATE: 2026-05-19
+COMMIT: 9db3d07 (Dynamic Type) + f6f37a3 (UIRequiresFullScreen)
+BRANCH: feature/ios-phase-4-device (stacked on Phase 3)
+DEVICE: iPhone 17 Pro Max, iOS 26.4.2
+WHAT SHIPPED:
+  - App installed + runs interactively on real hardware (signed, Team FTRF39786G)
+  - On-device verification 7/7: per-screen parity, safe-area, Dynamic Type, journal persistence, offline, background resume, crisis deep links
+  - Fixed: portrait full-screen warning; native Dynamic Type bridge so the web UI scales with the iOS Text Size slider
+WHAT'S NEXT: Phase 5 — TestFlight build (archive + upload to App Store Connect)
+BLOCKERS: none. Open (deferred, non-blocking): Minor footer-pill overlap (Phase 3); push N/A v1.0 by design
+SCREENSHOTS: n/a (Phase 3 holds the captures)
+HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layout (full screen, safe areas)
+```
