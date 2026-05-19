@@ -146,3 +146,17 @@ HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layou
 - Wayne ran Organizer **Validate App** (passed) then **Distribute App → App Store Connect → Upload** for **1.0.0 (2)**. Build submitted to App Store Connect; processing pending.
 - Remaining (Apple-account interactive): ensure App Store Connect app record exists for com.bigsarge.unseenmarch; after processing, create internal TestFlight group + add Wayne as tester.
 - Build **1.0.0 (2)** completed App Store Connect processing — App Apple ID **6770785464**, SKU unseenmarch-ios, app record live. Pipeline proven end-to-end (archive → upload → processed → Ready). Remaining: create internal TestFlight group + add tester (Wayne) to trigger the tester invite.
+
+### PHASE 6 — Listing-Prep Handoff
+- DATE: 2026-05-19
+- BRANCH: feature/ios-phase-6-listing (stacked on Phase 5)
+- WHAT SHIPPED:
+  - docs/app-store/icon-1024.png (1024×1024, no alpha — App Store marketing icon)
+  - docs/app-store/screen_iPhone69_01_home.png (1320×2868, required 6.9" iPhone, Home)
+  - docs/app-store/screen_iPad13_01_home.png (2064×2752, required 13" iPad, Home)
+  - docs/app-store/LISTING_BRIEF.md — app facts, URLs, category/age guidance, App Privacy = Data Not Collected, export-compliance, App Review notes, exact ASC field limits + voice guardrails for Cowork
+- HANDOFF: Cowork session writes description/subtitle/promo/keywords/support copy in Wayne's voice using the manuscript. Paste the Phase 6 Milestone Summary into Cowork.
+- OPEN (for Wayne/Cowork): capture Grounding/Mood/Journal/Crisis screenshots at 6.9"+13" (Home only automated); optional Apple-template framing.
+- WHAT'S NEXT: listing copy in Cowork → submit for App Store review when ready (TestFlight build 1.0.0(2) already processed & tested)
+- BLOCKERS: none
+- HIG/RESOURCE REFERENCES: Apple Design Resources — Production Templates (1024 icon, screenshot frames); App Store Connect — App Privacy, Age Rating, App Review Guideline 4.2
