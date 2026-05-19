@@ -66,3 +66,22 @@ iOS (Capacitor) build-out to TestFlight parity with the live Google Play Android
 - iOS 26.5 platform SDK + simulator runtime installed (iPhone 17 Pro/Max/17e, iPads)
 - Clean **no-signing build for "Any iOS Device" → BUILD SUCCEEDED** (xcodebuild, SPM graph resolved, no project errors). Phase 2 build requirement satisfied.
 - Remaining open (non-blocking, deferred to their phases): development provisioning profile needs a registered device (Phase 4 — connect iPhone); App Store distribution profile generated at archive (Phase 5). "no devices" signing message is expected and harmless until then.
+
+### PHASE 3 — Simulator Pass
+- DATE: 2026-05-18
+- COMMIT: ff14523
+- BRANCH: feature/ios-phase-3-simulator (stacked on Phase 2)
+- WHAT SHIPPED:
+  - App builds and runs on the iOS Simulator. Bundled React PWA renders correctly — the make-or-break risk for the whole Capacitor approach is now retired
+  - Verified Home screen at full Android feature parity on iPhone 17e (small), iPhone 17 Pro Max (large, Dynamic Island), iPad Pro 11: header, daily quote, streak counters, Quick Actions (Grounding / Mood / Journal / Recovery Guide), prominent Crisis Resources, bottom tab bar
+  - Locked the app to portrait to match the web manifest (portrait-primary) and the Android app — prevents a broken landscape layout
+  - Screenshots captured to docs/ios-simulator-screens/
+- LAYOUT REGRESSIONS vs Android (found in this pass):
+  1. **Safe-area top (Major, iOS-specific):** iOS status bar / Dynamic Island overlaps the app header (worst on iPhone 17 Pro Max). FIX EXISTS: `env(safe-area-inset-top)` on `.app-shell` in `assets/a11y.css` on branch `fix/a11y-majors` — not yet in the iOS phase chain (see merge note).
+  2. **Footer pill overlap (Minor, iOS-specific):** the "Privacy Policy" pill (`#app-footer{bottom:70px}`) overlaps the web bottom-nav. Partially addressed by the `fix/a11y-majors` footer + bottom safe-area changes; may need a small extra offset so it clears the fixed nav.
+  - Applied fix this phase: portrait lock (commit a484f79).
+- MERGE NOTE (decision for Wayne): the two regressions above are already fixed on `fix/a11y-text-size-adjust` and `fix/a11y-majors` (branched off master). To get them into the iOS build, those branches need to land in the iOS phase chain — recommend merging both a11y branches → master, then rebasing the iOS phase branches on master (or cherry-picking the a11y commits into the Phase 3 branch). Flagged, not done — your call on order.
+- WHAT'S NEXT: Phase 4 — physical-device pass (push/offline/auth/background; connect iPhone). The per-screen interactive walk (Grounding/Mood/Journal/Crisis) is best done here on the real device — WKWebView web buttons aren't reliably tappable via headless simulator automation, so Home was captured as proof-of-render and the rest is the Phase 4 hands-on walk.
+- BLOCKERS: none for progress
+- SCREENSHOTS: docs/ios-simulator-screens/home_iPhone17e_portrait.png, home_iPhone17ProMax_portrait.png, home_iPadPro11_portrait.png
+- HIG/RESOURCE REFERENCES: HIG — Layout (Safe Areas / Dynamic Island), Adaptivity and Layout (orientation), iPad parity. Apple Design Resources — production templates noted for Phase 6 listing assets
