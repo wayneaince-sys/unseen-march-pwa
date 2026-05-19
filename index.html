@@ -13,6 +13,7 @@
 <link rel="apple-touch-icon" href="/unseen-march-pwa/icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/unseen-march-pwa/icons/icon-192.png">
 <link rel="stylesheet" href="/unseen-march-pwa/assets/app.css">
+<link rel="stylesheet" href="/unseen-march-pwa/assets/a11y.css">
 <style>
   .status-bar { display: none !important; }
   a[href="https://www.perplexity.ai/computer"] { display: none !important; }
@@ -63,11 +64,13 @@
   }
   #app-footer a {
     pointer-events: all;
-    font-size: 0.7rem; color: #607060;
+    font-size: 0.8rem; color: #9aa89a;
     text-decoration: none; letter-spacing: 0.04em;
     font-family: Georgia, serif;
     background: rgba(19,28,38,0.85);
-    padding: 3px 10px; border-radius: 20px;
+    padding: 8px 16px; border-radius: 20px;
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; min-width: 44px; box-sizing: border-box;
   }
   #app-footer a:hover { color: #c9a84c; }
 </style>
