@@ -93,3 +93,20 @@ iOS (Capacitor) build-out to TestFlight parity with the live Google Play Android
   - **Safe-area top (Major): RESOLVED** — header now sits cleanly below the Dynamic Island / status bar. Evidence: docs/ios-simulator-screens/home_iPhone17ProMax_portrait_a11yfixed.png (vs the pre-fix home_iPhone17ProMax_portrait.png).
   - **Footer pill overlap (Minor): STILL OPEN** — `#app-footer{bottom:70px}` in index.html inline CSS still clips the web bottom-nav. Low priority; candidate fix: raise the offset or suppress the floating footer in standalone (privacy policy remains reachable in-app). Deferred — not a Phase 4 blocker.
 - Net: the only Major layout regression from Phase 3 is fixed and verified on a device-class simulator; all 5 accessibility fixes (1 Critical + 4 Major) are now in the iOS build and the live site.
+
+### PHASE 4 — Physical-Device Pass
+- DATE: 2026-05-19
+- BRANCH: feature/ios-phase-4-device (stacked on Phase 3)
+- DEVICE: iPhone 17 Pro Max (iPhone18,2), iOS 26.4.2, UDID 00008150-001128AE1138401C
+- INSTALL: signed build (Team FTRF39786G, automatic) via decoupled `xcodebuild generic/platform=iOS` + `xcrun devicectl device install app`; launched; opens and is interactive on real hardware. (Developer Mode + device preparation were one-time user steps; "failed to allocate rsd" = harmless CoreDevice USB tunnel hiccup; no manual cert trust needed with a Developer Program cert.)
+- FIX APPLIED THIS PHASE: `UIRequiresFullScreen=true` (commit f6f37a3) — silences the all-orientations build warning; correct for portrait-only/parity.
+- ON-DEVICE VERIFICATION (Wayne):
+  1. Per-screen parity (Home/Ground/Mood/Journal/Crisis/Recovery, 5-4-3-2-1, Box Breathing): **PASS**
+  2. Safe-area below Dynamic Island on real HW: **PASS**
+  3. Dynamic Type (system Text Size scales app): **FAIL** — see finding
+  4. Journal persistence across app kill: **PASS**
+  5. Offline cold-launch (airplane mode): **PASS**
+  6. Background resume: **PASS**
+  7. Crisis path (988 / text / chat deep links): **PASS**
+  - Push: N/A v1.0 by design (no APNs server; Android parity)
+- FINDING — Dynamic Type (#3): `-webkit-text-size-adjust:auto` (the Critical audit fix) is necessary but not sufficient in a WKWebView; it governs Safari text-inflation, not the iOS Text Size slider. True Dynamic Type in a webview wrap requires a native bridge: read `UIContentSizeCategory` and inject a root font-size scale (the app's Tailwind rem scale keys off root, so a single root-px scale propagates app-wide). Parity note: the Android TWA also does not bind to the OS font-size slider, so this is an enhancement beyond strict parity — decision pending (native bridge now vs. logged fast-follow).
