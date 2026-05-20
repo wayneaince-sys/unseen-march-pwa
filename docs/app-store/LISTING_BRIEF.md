@@ -75,6 +75,8 @@ honor the audience (veterans, first responders, trauma survivors, families).
 ## Asset inventory (this folder: docs/app-store/)
 - `icon-1024.png` — 1024×1024, no alpha → **App Store marketing icon, ready**
 
+**6.7" iPhone variants (1284×2778, current ASC slot):** screen_iPhone67_01..05_*.png — resized from the 6.9" captures (within 0.4% aspect ratio); use these for the iPhone screenshot slot in App Store Connect listings that don't yet show a 6.9" slot.
+
 **6.9" iPhone screenshots (1320×2868, required slot):**
 - `screen_iPhone69_01_home.png` — Home (daily quote, streak counters, Quick Actions, Crisis Resources, book promo)
 - `screen_iPhone69_02_grounding.png` — Grounding Tools (5‑4‑3‑2‑1, Box Breathing, Cold Water Anchor, Progressive Muscle Relaxation)
