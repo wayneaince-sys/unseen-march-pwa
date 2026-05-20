@@ -168,3 +168,8 @@ HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layou
   - iPad 13"  (2064×2752): home, grounding, mood, journal, crisis
 - **Technique:** Capacitor SPA uses hash routing, not the manifest's `?screen=` convention. Discovered via bundle inspection; injected `history.replaceState({},'','#/<screen>')` into the App.app's bundled `public/index.html` before the app.js module loads, then installed/launched/screenshot per device. Canonical bundle restored after capture.
 - All Phase 6 listing assets now complete and ready for Cowork to write copy against.
+
+#### Submitted for App Store Review (2026-05-19)
+- App Store Connect listing complete: App Privacy = Data Not Collected, App Information (Health & Fitness primary, Lifestyle secondary, age rating 12+ via Medical/Treatment Information: Infrequent/Mild), Pricing & Availability (Free, all territories), 1.0.0 Version (Support/Marketing URLs, copyright, build 1.0.0(2), 10 screenshots — 5×6.7" iPhone + 5×13" iPad, App Review notes including pre-emptive 4.2 rationale, **Manually release**).
+- Cowork delivered Subtitle / Promo / Description / Keywords / What's New in Wayne's voice; pasted and saved.
+- **Submitted for App Store Review.** Awaiting Apple decision (first review typically 24–72h for mental-health apps).
