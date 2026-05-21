@@ -1,0 +1,39 @@
+name: Unseen March — Slack Status Notify
+
+on:
+  push:
+    branches:
+      - master
+  release:
+    types: [published, prereleased]
+  workflow_dispatch:
+
+jobs:
+  notify-slack:
+    name: Post Build Status to Slack
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Post push notification
+        if: github.event_name == 'push'
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"*📦 Unseen March PWA — Push to master*\nCommit: \`${{ github.sha }}\`\nAuthor: ${{ github.actor }}\nMessage: ${{ github.event.head_commit.message }}\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Post release notification
+        if: github.event_name == 'release'
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"*🚀 Unseen March PWA — Release Published*\nTag: ${{ github.event.release.tag_name }}\nAuthor: ${{ github.actor }}\nType: ${{ github.event.release.prerelease && 'Pre-release' || 'Production' }}\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Post manual notification
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"*🔧 Unseen March PWA — Manual Status Update*\nTriggered by: ${{ github.actor }}\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
