@@ -3,7 +3,7 @@ name: Unseen March — Slack Status Notify
 on:
   push:
     branches:
-      - main
+      - master
   release:
     types: [published, prereleased]
   workflow_dispatch:
