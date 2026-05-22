@@ -1,0 +1,18 @@
+# Node / Capacitor (iOS build-out)
+node_modules/
+www/
+
+# Capacitor iOS native build artifacts (the App project itself IS committed)
+ios/App/Pods/
+ios/App/App/public/
+ios/App/build/
+ios/.DS_Store
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# macOS
+.DS_Store
+
+# Xcode per-user workspace state
+ios/App/App.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings

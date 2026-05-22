@@ -1,0 +1,26 @@
+{
+  "name": "unseen-march-pwa",
+  "version": "1.0.0",
+  "description": "> A mental health wellness companion for veterans, first responders, and trauma survivors.   > Built on *The Unseen March* by Wayne Aince (Big Sarge), Breaking Ranks Books.",
+  "private": true,
+  "scripts": {
+    "build": "bash scripts/build-www.sh",
+    "test": "echo \"no tests\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wayneaince-sys/unseen-march-pwa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wayneaince-sys/unseen-march-pwa/issues"
+  },
+  "homepage": "https://github.com/wayneaince-sys/unseen-march-pwa#readme",
+  "dependencies": {
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/ios": "^8.3.4"
+  }
+}
