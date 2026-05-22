@@ -173,3 +173,8 @@ HIG/RESOURCE REFERENCES: HIG — Accessibility (Dynamic Type / Text Size), Layou
 - App Store Connect listing complete: App Privacy = Data Not Collected, App Information (Health & Fitness primary, Lifestyle secondary, age rating 12+ via Medical/Treatment Information: Infrequent/Mild), Pricing & Availability (Free, all territories), 1.0.0 Version (Support/Marketing URLs, copyright, build 1.0.0(2), 10 screenshots — 5×6.7" iPhone + 5×13" iPad, App Review notes including pre-emptive 4.2 rationale, **Manually release**).
 - Cowork delivered Subtitle / Promo / Description / Keywords / What's New in Wayne's voice; pasted and saved.
 - **Submitted for App Store Review.** Awaiting Apple decision (first review typically 24–72h for mental-health apps).
+
+#### ✅ APPROVED — Ready for Distribution (2026-05-19)
+- App Store review **passed**. Status: **Ready for Distribution** (approved; releasing per the chosen release setting).
+- Unseen March iOS v1.0.0 (2) — public App Store link: https://apps.apple.com/app/id6770785464
+- Goal achieved: iOS version shipped for Apple-device users, at feature parity with the live Google Play Android (TWA) app. End-to-end build-out Phases 0–6 complete.
