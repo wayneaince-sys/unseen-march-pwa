@@ -20,9 +20,9 @@
     "path": "./android.keystore",
     "alias": "unseenmarch"
   },
-  "appVersionCode": 2,
-  "appVersionName": "1.0.1",
-    "shortcuts": [],
+  "appVersionCode": 6,
+  "appVersionName": "1.0.3",
+  "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://wayneaince-sys.github.io/unseen-march-pwa/manifest.json",
   "fallbackType": "customtabs",
